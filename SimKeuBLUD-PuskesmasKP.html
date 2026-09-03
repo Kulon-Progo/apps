@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Sistem Keuangan BLUD | Puskesmas Kulon Progo</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+font-family:'Segoe UI',system-ui,sans-serif;
+background:#020617;
+}
+
+
+/* =========================
+   WEB APP
+========================= */
+
+iframe{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+border:0;
+background:#fff;
+}
+
+
+/* =========================
+   LOADER
+========================= */
+
+#loader{
+position:fixed;
+inset:0;
+z-index:9999;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:
+radial-gradient(
+circle at center,
+#064e3b 0%,
+#022c22 35%,
+#020617 82%
+);
+
+transition:
+opacity .7s ease,
+visibility .7s ease;
+}
+
+.hide{
+opacity:0;
+visibility:hidden;
+}
+
+
+/* =========================
+   AMBIENT GLOW
+========================= */
+
+#loader::before{
+content:"";
+
+position:absolute;
+
+width:350px;
+height:350px;
+
+border-radius:50%;
+
+background:
+rgba(16,185,129,.13);
+
+filter:blur(90px);
+
+animation:
+ambient 5s infinite ease-in-out;
+}
+
+@keyframes ambient{
+
+0%,100%{
+transform:scale(.9);
+opacity:.5;
+}
+
+50%{
+transform:scale(1.15);
+opacity:1;
+}
+
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+position:relative;
+z-index:2;
+
+width:92%;
+max-width:420px;
+
+padding:30px 25px;
+
+border-radius:30px;
+
+background:
+rgba(2,44,34,.95);
+
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(25px);
+
+border:
+1px solid rgba(167,243,208,.28);
+
+color:#fff;
+
+text-align:center;
+
+box-shadow:
+0 25px 70px rgba(0,0,0,.8);
+
+text-shadow:
+0 2px 5px rgba(0,0,0,.9);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+margin-bottom:8px;
+}
+
+.label{
+font-size:11px;
+
+font-weight:800;
+
+letter-spacing:2px;
+
+color:#d1fae5;
+}
+
+.status{
+width:10px;
+height:10px;
+
+border-radius:50%;
+
+background:#34d399;
+
+box-shadow:
+0 0 15px #34d399;
+
+animation:
+statusPulse 1.8s infinite;
+}
+
+@keyframes statusPulse{
+
+0%,100%{
+transform:scale(1);
+opacity:1;
+}
+
+50%{
+transform:scale(1.6);
+opacity:.45;
+}
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+font-size:22px;
+
+font-weight:800;
+
+color:#ffffff;
+
+margin-top:7px;
+
+letter-spacing:.5px;
+
+text-shadow:
+0 2px 10px rgba(0,0,0,.95);
+}
+
+.subtitle{
+font-size:13px;
+
+font-weight:500;
+
+color:#d1fae5;
+
+margin-top:7px;
+
+line-height:1.65;
+}
+
+
+/* =========================
+   ANIMASI KEUANGAN
+========================= */
+
+.finance{
+position:relative;
+
+height:180px;
+
+margin:15px 0 10px;
+}
+
+
+/* =========================
+   GLOW
+========================= */
+
+.finance-glow{
+position:absolute;
+
+left:50%;
+top:50%;
+
+width:150px;
+height:150px;
+
+transform:
+translate(-50%,-50%);
+
+border-radius:50%;
+
+background:
+rgba(16,185,129,.1);
+
+box-shadow:
+0 0 80px rgba(16,185,129,.3);
+
+animation:
+glowPulse 3s infinite;
+}
+
+@keyframes glowPulse{
+
+0%,100%{
+transform:
+translate(-50%,-50%)
+scale(.9);
+}
+
+50%{
+transform:
+translate(-50%,-50%)
+scale(1.08);
+}
+
+}
+
+
+/* =========================
+   DOKUMEN KEUANGAN
+========================= */
+
+.document{
+position:absolute;
+
+left:50%;
+top:50%;
+
+width:105px;
+height:125px;
+
+transform:
+translate(-50%,-50%)
+rotate(-3deg);
+
+border-radius:9px;
+
+background:
+linear-gradient(
+145deg,
+#ffffff,
+#ecfdf5
+);
+
+box-shadow:
+0 18px 35px rgba(0,0,0,.5);
+
+overflow:hidden;
+
+z-index:3;
+
+animation:
+documentFloat 2.8s infinite ease-in-out;
+}
+
+@keyframes documentFloat{
+
+0%,100%{
+transform:
+translate(-50%,-50%)
+rotate(-3deg)
+translateY(0);
+}
+
+50%{
+transform:
+translate(-50%,-50%)
+rotate(2deg)
+translateY(-7px);
+}
+
+}
+
+
+/* document header */
+
+.document-header{
+height:21px;
+
+background:
+linear-gradient(
+90deg,
+#059669,
+#34d399
+);
+}
+
+
+/* document lines */
+
+.doc-line{
+height:5px;
+
+border-radius:10px;
+
+background:#a7f3d0;
+
+margin:9px 13px 0;
+}
+
+.doc-line.medium{
+width:68%;
+}
+
+.doc-line.short{
+width:45%;
+}
+
+
+/* =========================
+   KOIN
+========================= */
+
+.coin{
+position:absolute;
+
+right:32px;
+top:22px;
+
+width:48px;
+height:48px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-weight:900;
+font-size:16px;
+
+color:#78350f;
+
+background:
+linear-gradient(
+145deg,
+#fde68a,
+#f59e0b
+);
+
+border:
+3px solid #fef3c7;
+
+box-shadow:
+0 0 25px rgba(245,158,11,.65);
+
+z-index:5;
+
+animation:
+coinFloat 2.2s infinite ease-in-out;
+}
+
+@keyframes coinFloat{
+
+0%,100%{
+transform:translateY(0) rotate(0deg);
+}
+
+50%{
+transform:translateY(-8px) rotate(8deg);
+}
+
+}
+
+
+/* =========================
+   CHECK
+========================= */
+
+.check{
+position:absolute;
+
+left:29px;
+bottom:25px;
+
+width:45px;
+height:45px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:23px;
+
+background:#10b981;
+
+color:white;
+
+box-shadow:
+0 0 22px rgba(16,185,129,.65);
+
+z-index:5;
+
+animation:
+checkPulse 2s infinite;
+}
+
+@keyframes checkPulse{
+
+0%,100%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.1);
+}
+
+}
+
+
+/* =========================
+   GRAFIK
+========================= */
+
+.chart{
+position:absolute;
+
+right:18px;
+bottom:8px;
+
+height:68px;
+
+width:78px;
+
+display:flex;
+
+align-items:flex-end;
+
+gap:6px;
+
+z-index:4;
+}
+
+.chart span{
+width:11px;
+
+border-radius:5px 5px 0 0;
+
+background:
+linear-gradient(
+to top,
+#059669,
+#6ee7b7
+);
+
+box-shadow:
+0 0 9px rgba(16,185,129,.35);
+
+animation:
+chart 1.8s infinite ease-in-out;
+}
+
+.chart span:nth-child(1){
+height:23px;
+animation-delay:.1s;
+}
+
+.chart span:nth-child(2){
+height:38px;
+animation-delay:.25s;
+}
+
+.chart span:nth-child(3){
+height:51px;
+animation-delay:.4s;
+}
+
+.chart span:nth-child(4){
+height:63px;
+animation-delay:.55s;
+}
+
+@keyframes chart{
+
+0%,100%{
+transform:scaleY(.65);
+}
+
+50%{
+transform:scaleY(1);
+}
+
+}
+
+
+/* =========================
+   RUPIAH PARTICLES
+========================= */
+
+.rp{
+position:absolute;
+
+font-weight:800;
+
+font-size:11px;
+
+color:#fcd34d;
+
+opacity:.6;
+
+animation:
+rpFloat 3s infinite ease-in-out;
+}
+
+.rp1{
+left:30px;
+top:25px;
+}
+
+.rp2{
+right:28px;
+bottom:42px;
+
+animation-delay:.7s;
+}
+
+.rp3{
+left:65px;
+bottom:18px;
+
+animation-delay:1.2s;
+}
+
+@keyframes rpFloat{
+
+0%,100%{
+transform:translateY(0);
+opacity:.3;
+}
+
+50%{
+transform:translateY(-9px);
+opacity:1;
+}
+
+}
+
+
+/* =========================
+   BADGES
+========================= */
+
+.badges{
+position:absolute;
+
+left:50%;
+bottom:0;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:6px;
+
+white-space:nowrap;
+}
+
+.badge{
+padding:4px 8px;
+
+border-radius:20px;
+
+font-size:8px;
+
+font-weight:800;
+
+color:#d1fae5;
+
+background:
+rgba(2,44,34,.95);
+
+border:
+1px solid rgba(167,243,208,.25);
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.loading-text{
+font-size:14px;
+
+font-weight:800;
+
+color:#ffffff;
+
+margin-top:8px;
+
+text-shadow:
+0 2px 7px rgba(0,0,0,.95);
+}
+
+.description{
+font-size:12px;
+
+line-height:1.7;
+
+color:#d1fae5;
+
+margin-top:7px;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress{
+margin-top:20px;
+
+height:6px;
+
+border-radius:20px;
+
+background:#022c22;
+
+overflow:hidden;
+
+border:
+1px solid rgba(167,243,208,.18);
+}
+
+.bar{
+height:100%;
+
+width:38%;
+
+border-radius:20px;
+
+background:
+linear-gradient(
+90deg,
+#059669,
+#fcd34d,
+#34d399
+);
+
+animation:
+loading 1.5s infinite;
+}
+
+@keyframes loading{
+
+0%{
+transform:translateX(-130%);
+}
+
+100%{
+transform:translateX(330%);
+}
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px){
+
+.card{
+padding:27px 20px;
+}
+
+.title{
+font-size:20px;
+}
+
+.finance{
+height:165px;
+}
+
+.badge{
+font-size:7px;
+padding:4px 6px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =========================
+     WEB APP
+========================= -->
+
+<iframe
+id="app"
+src="https://script.google.com/macros/s/AKfycbxapvs6n5uqTsPhdb1bO-WN4HCAAr76xAFsG-WxSMf66T7rIJjNElde-QCCqRUGli_Dcw/exec">
+</iframe>
+
+
+<!-- =========================
+     LOADER
+========================= -->
+
+<div id="loader">
+
+<div class="card">
+
+
+<div class="header">
+
+<div class="label">
+KEUANGAN BLUD
+</div>
+
+<div class="status"></div>
+
+</div>
+
+
+<div class="title">
+SISTEM KEUANGAN BLUD
+</div>
+
+
+<div class="subtitle">
+Puskesmas Kabupaten Kulon Progo
+</div>
+
+
+<!-- =========================
+     ANIMASI
+========================= -->
+
+<div class="finance">
+
+<div class="finance-glow"></div>
+
+
+<!-- Rupiah -->
+
+<div class="rp rp1">Rp</div>
+<div class="rp rp2">Rp</div>
+<div class="rp rp3">Rp</div>
+
+
+<!-- Dokumen -->
+
+<div class="document">
+
+<div class="document-header"></div>
+
+<div class="doc-line medium"></div>
+<div class="doc-line"></div>
+<div class="doc-line short"></div>
+
+<div class="doc-line medium"></div>
+<div class="doc-line"></div>
+
+</div>
+
+
+<!-- Koin -->
+
+<div class="coin">
+Rp
+</div>
+
+
+<!-- Check -->
+
+<div class="check">
+✓
+</div>
+
+
+<!-- Grafik -->
+
+<div class="chart">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+<!-- Badge -->
+
+<div class="badges">
+
+<div class="badge">
+PENDAPATAN
+</div>
+
+<div class="badge">
+BELANJA
+</div>
+
+<div class="badge">
+PELAPORAN
+</div>
+
+</div>
+
+</div>
+
+
+<div class="loading-text">
+Menyiapkan sistem keuangan...
+</div>
+
+
+<div class="description">
+Pengelolaan, pencatatan dan pelaporan<br>
+keuangan BLUD Puskesmas Kulon Progo
+</div>
+
+
+<div class="progress">
+
+<div class="bar"></div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+const loader =
+document.getElementById("loader");
+
+const app =
+document.getElementById("app");
+
+
+/* Web App selesai dimuat */
+
+app.onload=function(){
+
+setTimeout(()=>{
+
+loader.classList.add("hide");
+
+},500);
+
+};
+
+
+/* Fallback */
+
+setTimeout(()=>{
+
+loader.classList.add("hide");
+
+},8000);
+
+</script>
+
+
+</body>
+</html>
