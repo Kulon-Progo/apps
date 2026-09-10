@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presensi Puskesmas Nanggulan</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #061b18;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  border: none;
+  display: block;
+}
+
+/* =========================
+   LOADER
+========================= */
+
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(16,185,129,.18), transparent 32%),
+    radial-gradient(circle at 20% 80%, rgba(6,182,212,.12), transparent 30%),
+    linear-gradient(135deg, #02110f, #06332d 55%, #041c1a);
+  transition: opacity .6s ease, visibility .6s ease;
+}
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-card {
+  width: min(430px, 90%);
+  padding: 38px 28px 32px;
+  border-radius: 28px;
+  text-align: center;
+
+  background: rgba(2, 24, 21, .96);
+  border: 1px solid rgba(52, 211, 153, .25);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  color: #ffffff;
+}
+
+/* =========================
+   ICON PRESENSI
+========================= */
+
+.presensi-icon {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 25px;
+}
+
+.clock {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+
+  background: linear-gradient(145deg, #10b981, #047857);
+  border: 5px solid rgba(255,255,255,.9);
+
+  box-shadow:
+    0 0 0 8px rgba(16,185,129,.10),
+    0 0 35px rgba(16,185,129,.35);
+
+  animation: pulse 2s infinite;
+}
+
+.clock::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 29px;
+  background: #ffffff;
+  border-radius: 4px;
+
+  left: 50%;
+  top: 23px;
+  transform-origin: 50% 100%;
+  transform: translateX(-50%) rotate(0deg);
+
+  animation: hourHand 4s linear infinite;
+}
+
+.clock::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 38px;
+  background: #ffffff;
+  border-radius: 4px;
+
+  left: 50%;
+  top: 18px;
+  transform-origin: 50% 100%;
+  transform: translateX(-50%) rotate(90deg);
+
+  animation: minuteHand 2s linear infinite;
+}
+
+.clock-center {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+/* Lingkaran scan */
+.scan-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(52,211,153,.25);
+  border-radius: 50%;
+  animation: scan 2.5s infinite;
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.badge {
+  display: inline-block;
+  padding: 6px 13px;
+  border-radius: 999px;
+
+  background: rgba(16,185,129,.14);
+  border: 1px solid rgba(52,211,153,.25);
+
+  color: #6ee7b7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 13px;
+}
+
+h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(23px, 5vw, 30px);
+  font-weight: 800;
+  letter-spacing: -.5px;
+
+  text-shadow: 0 2px 12px rgba(0,0,0,.6);
+}
+
+.subtitle {
+  margin: 9px 0 25px;
+  color: #d1fae5;
+  font-size: 14px;
+  line-height: 1.6;
+
+  text-shadow: 0 1px 5px rgba(0,0,0,.6);
+}
+
+/* =========================
+   LOADING BAR
+========================= */
+
+.loading-area {
+  margin-top: 8px;
+}
+
+.loading-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #a7f3d0;
+  font-weight: 600;
+}
+
+.progress {
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 99px;
+
+  background: rgba(255,255,255,.10);
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    90deg,
+    #10b981,
+    #34d399,
+    #67e8f9
+  );
+
+  box-shadow: 0 0 15px rgba(52,211,153,.45);
+
+  animation: loading 6s ease forwards;
+}
+
+.status {
+  margin-top: 15px;
+  min-height: 20px;
+
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+
+  text-shadow: 0 1px 6px rgba(0,0,0,.8);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  margin-top: 24px;
+  padding-top: 16px;
+
+  border-top: 1px solid rgba(255,255,255,.08);
+
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.footer strong {
+  color: #d1fae5;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 8px rgba(16,185,129,.10),
+      0 0 35px rgba(16,185,129,.35);
+  }
+
+  50% {
+    transform: scale(1.04);
+    box-shadow:
+      0 0 0 14px rgba(16,185,129,.04),
+      0 0 50px rgba(16,185,129,.50);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: scale(.85);
+    opacity: .8;
+  }
+
+  70% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+@keyframes hourHand {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@keyframes minuteHand {
+  from {
+    transform: translateX(-50%) rotate(90deg);
+  }
+
+  to {
+    transform: translateX(-50%) rotate(450deg);
+  }
+}
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+
+  25% {
+    width: 35%;
+  }
+
+  55% {
+    width: 68%;
+  }
+
+  80% {
+    width: 88%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .loader-card {
+    padding: 32px 22px 27px;
+    border-radius: 24px;
+  }
+
+  .presensi-icon {
+    width: 95px;
+    height: 95px;
+    margin-bottom: 21px;
+  }
+
+  .clock {
+    inset: 10px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- GOOGLE APPS SCRIPT -->
+<iframe
+  id="app"
+  src="https://script.google.com/macros/s/AKfycbywQsoYm7ZEwow8sEUfYNDgyc8ESciWLmVmpDQTtzGQqUGaCMFODEieYkV59B3CXZ2ZCg/exec"
+  allow="geolocation"
+  loading="eager">
+</iframe>
+
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+
+  <div class="loader-card">
+
+    <div class="presensi-icon">
+      <div class="scan-ring"></div>
+
+      <div class="clock">
+        <div class="clock-center"></div>
+      </div>
+    </div>
+
+    <div class="badge">
+      SISTEM INFORMASI KEPEGAWAIAN
+    </div>
+
+    <h1>Presensi Puskesmas Nanggulan</h1>
+
+    <div class="subtitle">
+      Memuat sistem presensi pegawai<br>
+      Puskesmas Nanggulan
+    </div>
+
+    <div class="loading-area">
+
+      <div class="loading-text">
+        <span id="loadingStatus">Menyiapkan aplikasi...</span>
+        <span id="percent">0%</span>
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="status" id="status">
+        Menghubungkan ke sistem presensi...
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <strong>Puskesmas Nanggulan</strong><br>
+      Kabupaten Kulon Progo · Daerah Istimewa Yogyakarta
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const loader = document.getElementById("loader");
+const iframe = document.getElementById("app");
+
+const percent = document.getElementById("percent");
+const loadingStatus = document.getElementById("loadingStatus");
+const status = document.getElementById("status");
+
+let progress = 0;
+let finished = false;
+
+/* Progress animasi */
+const progressTimer = setInterval(() => {
+
+  if (progress < 92) {
+
+    progress += Math.floor(Math.random() * 4) + 1;
+
+    if (progress > 92) {
+      progress = 92;
+    }
+
+    percent.textContent = progress + "%";
+
+    if (progress < 30) {
+      loadingStatus.textContent = "Menyiapkan aplikasi...";
+      status.textContent = "Menghubungkan ke sistem presensi...";
+    }
+    else if (progress < 60) {
+      loadingStatus.textContent = "Memuat sistem...";
+      status.textContent = "Menyiapkan layanan presensi pegawai...";
+    }
+    else if (progress < 85) {
+      loadingStatus.textContent = "Memuat data...";
+      status.textContent = "Menyiapkan halaman presensi...";
+    }
+    else {
+      loadingStatus.textContent = "Hampir selesai...";
+      status.textContent = "Membuka aplikasi presensi...";
+    }
+  }
+
+}, 250);
+
+
+/* Saat Google Apps Script selesai dimuat */
+iframe.addEventListener("load", () => {
+
+  setTimeout(() => {
+
+    if (finished) return;
+
+    finished = true;
+
+    clearInterval(progressTimer);
+
+    progress = 100;
+    percent.textContent = "100%";
+
+    loadingStatus.textContent = "Selesai";
+    status.textContent = "Sistem presensi siap digunakan.";
+
+    setTimeout(() => {
+      loader.classList.add("hide");
+    }, 500);
+
+  }, 700);
+
+});
+
+
+/* Fallback apabila iframe terlalu lama */
+setTimeout(() => {
+
+  if (finished) return;
+
+  finished = true;
+
+  clearInterval(progressTimer);
+
+  percent.textContent = "100%";
+  loadingStatus.textContent = "Selesai";
+  status.textContent = "Sistem presensi siap digunakan.";
+
+  setTimeout(() => {
+    loader.classList.add("hide");
+  }, 500);
+
+}, 8000);
+
+</script>
+
+</body>
+</html>
