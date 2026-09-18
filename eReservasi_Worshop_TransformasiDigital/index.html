@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>e-Reservasi | Workshop Transformasi Digital Puskesmas</title>
+<title>e-Reservasi</title>
 
 <style>
 * {
@@ -14,25 +14,24 @@
 html,
 body {
   margin: 0;
-  padding: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #061426;
+  background: #071a17;
 }
 
 #app {
   width: 100%;
   height: 100vh;
-  border: none;
+  border: 0;
   display: block;
 }
 
 
-/* =========================================
+/* =========================
    LOADER
-========================================= */
+========================= */
 
 #loader {
   position: fixed;
@@ -45,720 +44,266 @@ body {
 
   background:
     radial-gradient(
-      circle at 50% 15%,
-      rgba(14, 165, 233, .20),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 15% 85%,
-      rgba(16, 185, 129, .14),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 90% 70%,
-      rgba(99, 102, 241, .12),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #020817,
-      #071a31 50%,
-      #062b35
+      circle at center,
+      #0d2a24 0%,
+      #071a17 55%,
+      #04110f 100%
     );
 
   transition:
-    opacity .7s ease,
-    visibility .7s ease;
+    opacity .6s ease,
+    visibility .6s ease;
 }
 
 #loader.hide {
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
 }
 
 
-/* =========================================
-   DIGITAL BACKGROUND
-========================================= */
+/* =========================
+   CONTENT
+========================= */
 
-.grid {
-  position: absolute;
-  inset: 0;
-
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.025) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.025) 1px,
-      transparent 1px
-    );
-
-  background-size: 45px 45px;
-
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 20%,
-    black 80%,
-    transparent
-  );
-}
-
-
-/* =========================================
-   FLOATING DIGITAL PARTICLES
-========================================= */
-
-.particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-
-  border-radius: 50%;
-  background: #38bdf8;
-
-  box-shadow:
-    0 0 15px rgba(56,189,248,.9);
-
-  opacity: .6;
-
-  animation: floatParticle 5s infinite ease-in-out;
-}
-
-.p1 {
-  left: 12%;
-  top: 20%;
-  animation-delay: 0s;
-}
-
-.p2 {
-  left: 82%;
-  top: 22%;
-  animation-delay: 1s;
-}
-
-.p3 {
-  left: 20%;
-  top: 76%;
-  animation-delay: 2s;
-}
-
-.p4 {
-  left: 88%;
-  top: 75%;
-  animation-delay: 3s;
-}
-
-.p5 {
-  left: 50%;
-  top: 10%;
-  animation-delay: 1.5s;
-}
-
-@keyframes floatParticle {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      scale(1);
-    opacity: .35;
-  }
-
-  50% {
-    transform:
-      translateY(-25px)
-      scale(1.5);
-    opacity: .9;
-  }
-}
-
-
-/* =========================================
-   MAIN CARD
-========================================= */
-
-.loader-card {
-
-  position: relative;
-
-  width: min(500px, 92%);
-  padding: 38px 30px 30px;
-
-  border-radius: 30px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(8, 24, 43, .98),
-      rgba(5, 31, 45, .98)
-    );
-
-  border: 1px solid rgba(56,189,248,.22);
-
-  box-shadow:
-    0 35px 100px rgba(0,0,0,.65),
-    0 0 50px rgba(14,165,233,.08),
-    inset 0 1px 0 rgba(255,255,255,.06);
-
+.box {
+  width: min(420px, 88%);
   text-align: center;
-
-  color: #fff;
 }
 
 
-/* =========================================
-   RESERVATION ICON
-========================================= */
+/* =========================
+   ICON
+========================= */
 
-.reservation-icon {
-
+.icon {
   position: relative;
 
-  width: 125px;
-  height: 125px;
+  width: 82px;
+  height: 82px;
 
-  margin: 0 auto 25px;
-}
+  margin: 0 auto 28px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-/* outer ring */
+  border-radius: 22px;
 
-.ring {
+  background: rgba(16,185,129,.08);
 
-  position: absolute;
-  inset: 0;
+  border: 1px solid rgba(110,231,183,.18);
 
-  border-radius: 50%;
-
-  border: 1px solid rgba(56,189,248,.20);
-
-  animation: ringPulse 3s infinite;
-}
-
-.ring::before {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 12px;
-
-  border-radius: 50%;
-
-  border: 1px dashed rgba(52,211,153,.35);
-
-  animation: rotateRing 12s linear infinite;
+  animation: float 2.5s ease-in-out infinite;
 }
 
 
 /* calendar */
 
 .calendar {
-
-  position: absolute;
-
-  left: 25px;
-  top: 18px;
-
-  width: 75px;
-  height: 88px;
-
-  border-radius: 13px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #dff7ff
-    );
-
-  box-shadow:
-    0 12px 30px rgba(0,0,0,.35),
-    0 0 30px rgba(56,189,248,.20);
-
-  overflow: hidden;
-
-  transform:
-    rotate(-4deg);
-
-  animation: calendarFloat 3s infinite ease-in-out;
-}
-
-
-/* calendar top */
-
-.calendar-top {
-
-  height: 23px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #0284c7,
-      #06b6d4
-    );
-}
-
-
-/* calendar rings */
-
-.calendar-ring {
-
-  position: absolute;
-
-  top: -5px;
-
-  width: 6px;
-  height: 14px;
-
-  border-radius: 5px;
-
-  background: #e0f2fe;
-
-  box-shadow:
-    23px 0 0 #e0f2fe,
-    46px 0 0 #e0f2fe;
-}
-
-
-/* calendar lines */
-
-.calendar-content {
-
-  padding: 12px 10px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 7px;
-}
-
-.calendar-dot {
-
-  width: 8px;
-  height: 8px;
-
-  border-radius: 50%;
-
-  background: #0ea5e9;
-}
-
-.calendar-dot:nth-child(2),
-.calendar-dot:nth-child(5),
-.calendar-dot:nth-child(8) {
-  background: #10b981;
-}
-
-
-/* check */
-
-.check {
-
-  position: absolute;
-
-  right: 5px;
-  bottom: 10px;
+  position: relative;
 
   width: 38px;
-  height: 38px;
+  height: 42px;
 
-  border-radius: 50%;
+  border: 2px solid #6ee7b7;
 
-  background:
-    linear-gradient(
-      145deg,
-      #10b981,
-      #059669
-    );
-
-  border: 4px solid #062033;
-
-  box-shadow:
-    0 8px 20px rgba(16,185,129,.35);
-
-  animation: checkPulse 2s infinite;
+  border-radius: 7px;
 }
 
-.check::after {
-
+.calendar::before {
   content: "";
 
   position: absolute;
 
-  width: 15px;
-  height: 8px;
+  left: -2px;
+  right: -2px;
+  top: 9px;
 
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
+  height: 2px;
 
-  transform:
-    rotate(-45deg);
-
-  left: 9px;
-  top: 10px;
+  background: #6ee7b7;
 }
 
+.calendar::after {
+  content: "";
 
-/* =========================================
-   BADGE
-========================================= */
+  position: absolute;
 
-.badge {
-
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-
-  padding: 7px 14px;
-
-  border-radius: 999px;
-
-  background:
-    rgba(14,165,233,.12);
-
-  border:
-    1px solid rgba(56,189,248,.28);
-
-  color: #7dd3fc;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 1.5px;
-
-  margin-bottom: 13px;
-}
-
-.badge-dot {
-
-  width: 7px;
-  height: 7px;
+  width: 5px;
+  height: 5px;
 
   border-radius: 50%;
 
   background: #34d399;
 
-  box-shadow:
-    0 0 10px #34d399;
+  left: 8px;
+  top: 18px;
 
-  animation: blink 1.5s infinite;
+  box-shadow:
+    10px 0 #34d399,
+    0 9px #34d399,
+    10px 9px #34d399;
+}
+
+.calendar span {
+  position: absolute;
+
+  width: 5px;
+  height: 9px;
+
+  top: -7px;
+
+  border-radius: 3px;
+
+  background: #6ee7b7;
+}
+
+.calendar span:first-child {
+  left: 7px;
+}
+
+.calendar span:last-child {
+  right: 7px;
 }
 
 
-/* =========================================
+/* =========================
    TEXT
-========================================= */
+========================= */
+
+.label {
+  color: #6ee7b7;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
 
 h1 {
-
   margin: 0;
 
   color: #ffffff;
 
-  font-size:
-    clamp(22px, 5vw, 29px);
+  font-size: clamp(25px, 6vw, 32px);
 
   line-height: 1.25;
 
-  font-weight: 800;
+  font-weight: 700;
 
-  text-shadow:
-    0 2px 12px rgba(0,0,0,.7);
+  letter-spacing: -.5px;
 }
 
 .subtitle {
+  margin-top: 10px;
 
-  margin: 12px 0 5px;
-
-  color: #e0f2fe;
+  color: #b7c9c5;
 
   font-size: 14px;
 
-  line-height: 1.6;
-
-  font-weight: 500;
-
-  text-shadow:
-    0 1px 7px rgba(0,0,0,.7);
-}
-
-.tagline {
-
-  margin: 0 auto 25px;
-
-  color: #6ee7b7;
-
-  font-size: 13px;
-
   line-height: 1.5;
-
-  font-weight: 700;
-
-  font-style: italic;
-
-  max-width: 390px;
-
-  text-shadow:
-    0 1px 7px rgba(0,0,0,.7);
 }
 
 
-/* =========================================
+/* =========================
    LOADING
-========================================= */
+========================= */
 
-.loading-area {
+.loading {
+  width: 180px;
 
-  margin-top: 8px;
-}
-
-.loading-text {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  margin-bottom: 9px;
-
-  color: #bae6fd;
-
-  font-size: 11px;
-
-  font-weight: 700;
+  margin: 32px auto 0;
 }
 
 .progress {
-
   width: 100%;
-
-  height: 7px;
+  height: 3px;
 
   overflow: hidden;
 
-  border-radius: 999px;
+  border-radius: 10px;
 
-  background:
-    rgba(255,255,255,.09);
+  background: rgba(255,255,255,.10);
 }
 
 .progress-bar {
-
   width: 0%;
-
   height: 100%;
+
+  background: #34d399;
 
   border-radius: inherit;
 
-  background:
-    linear-gradient(
-      90deg,
-      #0284c7,
-      #06b6d4,
-      #10b981
-    );
-
-  box-shadow:
-    0 0 16px rgba(34,211,238,.5);
-
-  transition:
-    width .25s ease;
+  transition: width .2s ease;
 }
 
-.status {
+.loading-text {
+  margin-top: 10px;
 
-  min-height: 20px;
-
-  margin-top: 14px;
-
-  color: #ffffff;
-
-  font-size: 12px;
-
-  font-weight: 500;
-
-  text-shadow:
-    0 1px 7px rgba(0,0,0,.8);
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.footer {
-
-  margin-top: 23px;
-
-  padding-top: 16px;
-
-  border-top:
-    1px solid rgba(255,255,255,.08);
-
-  color: #94a3b8;
+  color: #718681;
 
   font-size: 10px;
 
-  line-height: 1.6;
-}
-
-.footer strong {
-
-  color: #dbeafe;
-
-  font-size: 11px;
+  letter-spacing: .5px;
 }
 
 
-/* =========================================
-   ANIMATIONS
-========================================= */
+/* =========================
+   ANIMATION
+========================= */
 
-@keyframes calendarFloat {
+@keyframes float {
 
   0%,
   100% {
-    transform:
-      translateY(0)
-      rotate(-4deg);
+    transform: translateY(0);
   }
 
   50% {
-    transform:
-      translateY(-8px)
-      rotate(2deg);
-  }
-}
-
-@keyframes ringPulse {
-
-  0% {
-    transform: scale(.88);
-    opacity: .2;
-  }
-
-  50% {
-    transform: scale(1);
-    opacity: .7;
-  }
-
-  100% {
-    transform: scale(1.15);
-    opacity: 0;
-  }
-}
-
-@keyframes rotateRing {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes checkPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-}
-
-@keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: .3;
+    transform: translateY(-6px);
   }
 }
 
 
-/* =========================================
+/* =========================
    MOBILE
-========================================= */
+========================= */
 
 @media (max-width: 480px) {
 
-  .loader-card {
+  .icon {
+    width: 72px;
+    height: 72px;
 
-    width: 92%;
-
-    padding:
-      31px
-      21px
-      27px;
-
-    border-radius: 25px;
-  }
-
-  .reservation-icon {
-
-    width: 108px;
-    height: 108px;
-
-    margin-bottom: 21px;
-  }
-
-  .calendar {
-
-    left: 22px;
-    top: 15px;
-
-    width: 67px;
-    height: 78px;
-  }
-
-  .check {
-
-    width: 34px;
-    height: 34px;
+    margin-bottom: 23px;
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 25px;
   }
 
   .subtitle {
     font-size: 13px;
   }
 
-  .tagline {
-    font-size: 12px;
+  .loading {
+    margin-top: 27px;
   }
 }
 </style>
 </head>
 
-
 <body>
 
 
-<!-- =========================================
+<!-- =========================
      GOOGLE APPS SCRIPT
-========================================= -->
+========================= -->
 
 <iframe
   id="app"
@@ -767,105 +312,46 @@ h1 {
 </iframe>
 
 
-<!-- =========================================
-     LOADER
-========================================= -->
+<!-- =========================
+     LOADING SCREEN
+========================= -->
 
 <div id="loader">
 
-  <div class="grid"></div>
-
-  <div class="particle p1"></div>
-  <div class="particle p2"></div>
-  <div class="particle p3"></div>
-  <div class="particle p4"></div>
-  <div class="particle p5"></div>
-
-
-  <div class="loader-card">
-
+  <div class="box">
 
     <!-- ICON -->
 
-    <div class="reservation-icon">
-
-      <div class="ring"></div>
+    <div class="icon">
 
       <div class="calendar">
 
-        <div class="calendar-top"></div>
-
-        <div class="calendar-ring"></div>
-
-        <div class="calendar-content">
-
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-
-        </div>
+        <span></span>
+        <span></span>
 
       </div>
-
-      <div class="check"></div>
-
-    </div>
-
-
-    <!-- BADGE -->
-
-    <div class="badge">
-
-      <span class="badge-dot"></span>
-
-      e-RESERVASI WORKSHOP
 
     </div>
 
 
     <!-- TITLE -->
 
-    <h1>
-      Transformasi Digital<br>
-      Puskesmas
-    </h1>
-
-
-    <div class="subtitle">
-      Kabupaten Kulon Progo
+    <div class="label">
+      e-Reservasi
     </div>
 
+    <h1>
+      Workshop Transformasi Digital
+    </h1>
 
-    <div class="tagline">
-      “Sesarengan Mbangun Ekosistem Digital
-      Kesehatan Kulon Progo”
+    <div class="subtitle">
+      Puskesmas Kabupaten Kulon Progo
     </div>
 
 
     <!-- LOADING -->
 
-    <div class="loading-area">
-
-      <div class="loading-text">
-
-        <span id="loadingStatus">
-          Menyiapkan reservasi...
-        </span>
-
-        <span id="percent">
-          0%
-        </span>
-
-      </div>
-
+    <div class="loading">
 
       <div class="progress">
 
@@ -876,31 +362,11 @@ h1 {
 
       </div>
 
-
-      <div
-        class="status"
-        id="status">
-
-        Menghubungkan ke sistem e-Reservasi...
-
+      <div class="loading-text">
+        Memuat aplikasi
       </div>
 
     </div>
-
-
-    <!-- FOOTER -->
-
-    <div class="footer">
-
-      <strong>
-        WORKSHOP TRANSFORMASI DIGITAL PUSKESMAS
-      </strong>
-      <br>
-
-      Kabupaten Kulon Progo · Daerah Istimewa Yogyakarta
-
-    </div>
-
 
   </div>
 
@@ -909,137 +375,62 @@ h1 {
 
 <script>
 
-/* =========================================
-   ELEMENT
-========================================= */
-
 const loader =
   document.getElementById("loader");
 
 const iframe =
   document.getElementById("app");
 
-const percent =
-  document.getElementById("percent");
-
-const loadingStatus =
-  document.getElementById("loadingStatus");
-
-const status =
-  document.getElementById("status");
-
 const progressBar =
   document.getElementById("progressBar");
 
-
 let progress = 0;
-let finished = false;
+let loaded = false;
 
 
-/* =========================================
-   PROGRESS
-========================================= */
+/* =========================
+   ANIMASI LOADING
+========================= */
 
-const progressTimer =
-  setInterval(() => {
+const timer = setInterval(() => {
 
-    if (progress < 93) {
+  if (progress < 90) {
 
-      progress +=
-        Math.floor(Math.random() * 4) + 1;
+    progress += 2;
 
-      if (progress > 93) {
-        progress = 93;
-      }
+    progressBar.style.width =
+      progress + "%";
 
-      percent.textContent =
-        progress + "%";
+  }
 
-      progressBar.style.width =
-        progress + "%";
+}, 100);
 
 
-      if (progress < 25) {
+/* =========================
+   BUKA APP
+========================= */
 
-        loadingStatus.textContent =
-          "Menyiapkan reservasi...";
+function openApp() {
 
-        status.textContent =
-          "Menghubungkan ke sistem e-Reservasi...";
+  if (loaded) return;
 
-      }
+  loaded = true;
 
-      else if (progress < 50) {
-
-        loadingStatus.textContent =
-          "Memuat sistem...";
-
-        status.textContent =
-          "Menyiapkan formulir reservasi workshop...";
-
-      }
-
-      else if (progress < 75) {
-
-        loadingStatus.textContent =
-          "Menyiapkan data...";
-
-        status.textContent =
-          "Memuat informasi kegiatan...";
-
-      }
-
-      else {
-
-        loadingStatus.textContent =
-          "Hampir selesai...";
-
-        status.textContent =
-          "Membuka halaman e-Reservasi...";
-
-      }
-
-    }
-
-  }, 220);
-
-
-/* =========================================
-   HIDE LOADER
-========================================= */
-
-function hideLoader() {
-
-  if (finished) return;
-
-  finished = true;
-
-  clearInterval(progressTimer);
-
-  progress = 100;
-
-  percent.textContent = "100%";
+  clearInterval(timer);
 
   progressBar.style.width = "100%";
-
-  loadingStatus.textContent =
-    "Selesai";
-
-  status.textContent =
-    "e-Reservasi siap digunakan.";
 
   setTimeout(() => {
 
     loader.classList.add("hide");
 
-  }, 600);
-
+  }, 500);
 }
 
 
-/* =========================================
-   IFRAME LOADED
-========================================= */
+/* =========================
+   SAAT APP SELESAI LOAD
+========================= */
 
 iframe.addEventListener(
   "load",
@@ -1047,7 +438,7 @@ iframe.addEventListener(
 
     setTimeout(() => {
 
-      hideLoader();
+      openApp();
 
     }, 700);
 
@@ -1055,15 +446,16 @@ iframe.addEventListener(
 );
 
 
-/* =========================================
+/* =========================
    FALLBACK
-========================================= */
+   Jika iframe lambat
+========================= */
 
 setTimeout(() => {
 
-  hideLoader();
+  openApp();
 
-}, 9000);
+}, 7000);
 
 </script>
 
