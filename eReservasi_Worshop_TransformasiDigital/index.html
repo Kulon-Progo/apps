@@ -18,14 +18,18 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #061426;
+  font-family:
+    "Segoe UI",
+    Inter,
+    Arial,
+    sans-serif;
+  background: #f5f7f8;
 }
 
 #app {
   width: 100%;
   height: 100vh;
-  border: none;
+  border: 0;
   display: block;
 }
 
@@ -43,32 +47,11 @@ body {
   align-items: center;
   justify-content: center;
 
-  background:
-    radial-gradient(
-      circle at 50% 15%,
-      rgba(14, 165, 233, .20),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 15% 85%,
-      rgba(16, 185, 129, .14),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 90% 70%,
-      rgba(99, 102, 241, .12),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #020817,
-      #071a31 50%,
-      #062b35
-    );
+  background: #f5f7f8;
 
   transition:
-    opacity .7s ease,
-    visibility .7s ease;
+    opacity .5s ease,
+    visibility .5s ease;
 }
 
 #loader.hide {
@@ -79,438 +62,203 @@ body {
 
 
 /* =========================================
-   DIGITAL BACKGROUND
+   CARD
 ========================================= */
 
-.grid {
-  position: absolute;
-  inset: 0;
+.loader-card {
+  width: min(520px, 90%);
 
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.025) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.025) 1px,
-      transparent 1px
-    );
+  padding: 48px 42px 38px;
 
-  background-size: 45px 45px;
+  text-align: center;
 
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 20%,
-    black 80%,
-    transparent
-  );
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, .08);
 }
 
 
 /* =========================================
-   FLOATING DIGITAL PARTICLES
+   SIMPLE ICON
 ========================================= */
 
-.particle {
+.icon-wrap {
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: #ecfdf5;
+
+  border: 1px solid #d1fae5;
+}
+
+
+/* Calendar */
+
+.calendar {
+  position: relative;
+
+  width: 34px;
+  height: 38px;
+
+  border: 2px solid #059669;
+
+  border-radius: 6px;
+}
+
+.calendar::before {
+  content: "";
+
   position: absolute;
+
+  left: -2px;
+  right: -2px;
+  top: 7px;
+
+  height: 2px;
+
+  background: #059669;
+}
+
+.calendar::after {
+  content: "";
+
+  position: absolute;
+
   width: 5px;
   height: 5px;
 
   border-radius: 50%;
-  background: #38bdf8;
+
+  background: #059669;
+
+  top: 16px;
+  left: 8px;
 
   box-shadow:
-    0 0 15px rgba(56,189,248,.9);
-
-  opacity: .6;
-
-  animation: floatParticle 5s infinite ease-in-out;
+    10px 0 0 #059669,
+    0 9px 0 #059669,
+    10px 9px 0 #059669;
 }
 
-.p1 {
-  left: 12%;
-  top: 20%;
-  animation-delay: 0s;
-}
+.calendar-pin {
+  position: absolute;
 
-.p2 {
-  left: 82%;
-  top: 22%;
-  animation-delay: 1s;
-}
+  width: 5px;
+  height: 9px;
 
-.p3 {
-  left: 20%;
-  top: 76%;
-  animation-delay: 2s;
-}
+  border-radius: 3px;
 
-.p4 {
-  left: 88%;
-  top: 75%;
-  animation-delay: 3s;
-}
+  background: #059669;
 
-.p5 {
-  left: 50%;
-  top: 10%;
-  animation-delay: 1.5s;
-}
+  top: -6px;
+  left: 7px;
 
-@keyframes floatParticle {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      scale(1);
-    opacity: .35;
-  }
-
-  50% {
-    transform:
-      translateY(-25px)
-      scale(1.5);
-    opacity: .9;
-  }
+  box-shadow:
+    14px 0 0 #059669;
 }
 
 
 /* =========================================
-   MAIN CARD
+   LABEL
 ========================================= */
 
-.loader-card {
+.label {
+  display: inline-block;
 
-  position: relative;
+  margin-bottom: 16px;
 
-  width: min(500px, 92%);
-  padding: 38px 30px 30px;
-
-  border-radius: 30px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(8, 24, 43, .98),
-      rgba(5, 31, 45, .98)
-    );
-
-  border: 1px solid rgba(56,189,248,.22);
-
-  box-shadow:
-    0 35px 100px rgba(0,0,0,.65),
-    0 0 50px rgba(14,165,233,.08),
-    inset 0 1px 0 rgba(255,255,255,.06);
-
-  text-align: center;
-
-  color: #fff;
-}
-
-
-/* =========================================
-   RESERVATION ICON
-========================================= */
-
-.reservation-icon {
-
-  position: relative;
-
-  width: 125px;
-  height: 125px;
-
-  margin: 0 auto 25px;
-}
-
-
-/* outer ring */
-
-.ring {
-
-  position: absolute;
-  inset: 0;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(56,189,248,.20);
-
-  animation: ringPulse 3s infinite;
-}
-
-.ring::before {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 12px;
-
-  border-radius: 50%;
-
-  border: 1px dashed rgba(52,211,153,.35);
-
-  animation: rotateRing 12s linear infinite;
-}
-
-
-/* calendar */
-
-.calendar {
-
-  position: absolute;
-
-  left: 25px;
-  top: 18px;
-
-  width: 75px;
-  height: 88px;
-
-  border-radius: 13px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #dff7ff
-    );
-
-  box-shadow:
-    0 12px 30px rgba(0,0,0,.35),
-    0 0 30px rgba(56,189,248,.20);
-
-  overflow: hidden;
-
-  transform:
-    rotate(-4deg);
-
-  animation: calendarFloat 3s infinite ease-in-out;
-}
-
-
-/* calendar top */
-
-.calendar-top {
-
-  height: 23px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #0284c7,
-      #06b6d4
-    );
-}
-
-
-/* calendar rings */
-
-.calendar-ring {
-
-  position: absolute;
-
-  top: -5px;
-
-  width: 6px;
-  height: 14px;
-
-  border-radius: 5px;
-
-  background: #e0f2fe;
-
-  box-shadow:
-    23px 0 0 #e0f2fe,
-    46px 0 0 #e0f2fe;
-}
-
-
-/* calendar lines */
-
-.calendar-content {
-
-  padding: 12px 10px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 7px;
-}
-
-.calendar-dot {
-
-  width: 8px;
-  height: 8px;
-
-  border-radius: 50%;
-
-  background: #0ea5e9;
-}
-
-.calendar-dot:nth-child(2),
-.calendar-dot:nth-child(5),
-.calendar-dot:nth-child(8) {
-  background: #10b981;
-}
-
-
-/* check */
-
-.check {
-
-  position: absolute;
-
-  right: 5px;
-  bottom: 10px;
-
-  width: 38px;
-  height: 38px;
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      145deg,
-      #10b981,
-      #059669
-    );
-
-  border: 4px solid #062033;
-
-  box-shadow:
-    0 8px 20px rgba(16,185,129,.35);
-
-  animation: checkPulse 2s infinite;
-}
-
-.check::after {
-
-  content: "";
-
-  position: absolute;
-
-  width: 15px;
-  height: 8px;
-
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
-
-  transform:
-    rotate(-45deg);
-
-  left: 9px;
-  top: 10px;
-}
-
-
-/* =========================================
-   BADGE
-========================================= */
-
-.badge {
-
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-
-  padding: 7px 14px;
-
-  border-radius: 999px;
-
-  background:
-    rgba(14,165,233,.12);
-
-  border:
-    1px solid rgba(56,189,248,.28);
-
-  color: #7dd3fc;
+  color: #047857;
 
   font-size: 11px;
 
-  font-weight: 800;
+  font-weight: 700;
 
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
 
-  margin-bottom: 13px;
-}
-
-.badge-dot {
-
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background: #34d399;
-
-  box-shadow:
-    0 0 10px #34d399;
-
-  animation: blink 1.5s infinite;
+  text-transform: uppercase;
 }
 
 
 /* =========================================
-   TEXT
+   TITLE
 ========================================= */
 
 h1 {
-
   margin: 0;
 
-  color: #ffffff;
+  color: #172033;
 
   font-size:
-    clamp(22px, 5vw, 29px);
+    clamp(23px, 5vw, 30px);
 
-  line-height: 1.25;
-
-  font-weight: 800;
-
-  text-shadow:
-    0 2px 12px rgba(0,0,0,.7);
-}
-
-.subtitle {
-
-  margin: 12px 0 5px;
-
-  color: #e0f2fe;
-
-  font-size: 14px;
-
-  line-height: 1.6;
-
-  font-weight: 500;
-
-  text-shadow:
-    0 1px 7px rgba(0,0,0,.7);
-}
-
-.tagline {
-
-  margin: 0 auto 25px;
-
-  color: #6ee7b7;
-
-  font-size: 13px;
-
-  line-height: 1.5;
+  line-height: 1.3;
 
   font-weight: 700;
 
+  letter-spacing: -.5px;
+}
+
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.subtitle {
+  margin-top: 9px;
+
+  color: #475569;
+
+  font-size: 15px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================
+   TAGLINE
+========================================= */
+
+.tagline {
+  max-width: 400px;
+
+  margin: 18px auto 30px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
   font-style: italic;
+}
 
-  max-width: 390px;
 
-  text-shadow:
-    0 1px 7px rgba(0,0,0,.7);
+/* =========================================
+   DIVIDER
+========================================= */
+
+.divider {
+  width: 45px;
+  height: 2px;
+
+  margin: 0 auto 25px;
+
+  background: #10b981;
+
+  border-radius: 10px;
 }
 
 
@@ -518,79 +266,52 @@ h1 {
    LOADING
 ========================================= */
 
-.loading-area {
-
+.loading {
   margin-top: 8px;
 }
 
-.loading-text {
-
+.loading-info {
   display: flex;
 
   justify-content: space-between;
 
-  align-items: center;
+  margin-bottom: 8px;
 
-  margin-bottom: 9px;
-
-  color: #bae6fd;
+  color: #94a3b8;
 
   font-size: 11px;
-
-  font-weight: 700;
 }
 
 .progress {
-
   width: 100%;
-
-  height: 7px;
+  height: 4px;
 
   overflow: hidden;
 
-  border-radius: 999px;
+  background: #e5e7eb;
 
-  background:
-    rgba(255,255,255,.09);
+  border-radius: 20px;
 }
 
 .progress-bar {
-
   width: 0%;
-
   height: 100%;
+
+  background: #059669;
 
   border-radius: inherit;
 
-  background:
-    linear-gradient(
-      90deg,
-      #0284c7,
-      #06b6d4,
-      #10b981
-    );
-
-  box-shadow:
-    0 0 16px rgba(34,211,238,.5);
-
-  transition:
-    width .25s ease;
+  transition: width .25s ease;
 }
 
 .status {
+  min-height: 18px;
 
-  min-height: 20px;
+  margin-top: 12px;
 
-  margin-top: 14px;
+  color: #64748b;
 
-  color: #ffffff;
-
-  font-size: 12px;
-
-  font-weight: 500;
-
-  text-shadow:
-    0 1px 7px rgba(0,0,0,.8);
+  font-size: 11px;
 }
 
 
@@ -599,13 +320,11 @@ h1 {
 ========================================= */
 
 .footer {
+  margin-top: 28px;
 
-  margin-top: 23px;
+  padding-top: 18px;
 
-  padding-top: 16px;
-
-  border-top:
-    1px solid rgba(255,255,255,.08);
+  border-top: 1px solid #f1f5f9;
 
   color: #94a3b8;
 
@@ -615,84 +334,7 @@ h1 {
 }
 
 .footer strong {
-
-  color: #dbeafe;
-
-  font-size: 11px;
-}
-
-
-/* =========================================
-   ANIMATIONS
-========================================= */
-
-@keyframes calendarFloat {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-4deg);
-  }
-
-  50% {
-    transform:
-      translateY(-8px)
-      rotate(2deg);
-  }
-}
-
-@keyframes ringPulse {
-
-  0% {
-    transform: scale(.88);
-    opacity: .2;
-  }
-
-  50% {
-    transform: scale(1);
-    opacity: .7;
-  }
-
-  100% {
-    transform: scale(1.15);
-    opacity: 0;
-  }
-}
-
-@keyframes rotateRing {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes checkPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-}
-
-@keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: .3;
-  }
+  color: #64748b;
 }
 
 
@@ -703,38 +345,21 @@ h1 {
 @media (max-width: 480px) {
 
   .loader-card {
-
-    width: 92%;
+    width: 90%;
 
     padding:
-      31px
-      21px
-      27px;
+      38px
+      24px
+      30px;
 
-    border-radius: 25px;
+    border-radius: 18px;
   }
 
-  .reservation-icon {
+  .icon-wrap {
+    width: 64px;
+    height: 64px;
 
-    width: 108px;
-    height: 108px;
-
-    margin-bottom: 21px;
-  }
-
-  .calendar {
-
-    left: 22px;
-    top: 15px;
-
-    width: 67px;
-    height: 78px;
-  }
-
-  .check {
-
-    width: 34px;
-    height: 34px;
+    margin-bottom: 23px;
   }
 
   h1 {
@@ -742,7 +367,7 @@ h1 {
   }
 
   .subtitle {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .tagline {
@@ -768,96 +393,62 @@ h1 {
 
 
 <!-- =========================================
-     LOADER
+     LOADING SCREEN
 ========================================= -->
 
 <div id="loader">
 
-  <div class="grid"></div>
-
-  <div class="particle p1"></div>
-  <div class="particle p2"></div>
-  <div class="particle p3"></div>
-  <div class="particle p4"></div>
-  <div class="particle p5"></div>
-
-
   <div class="loader-card">
 
-
     <!-- ICON -->
-
-    <div class="reservation-icon">
-
-      <div class="ring"></div>
+    <div class="icon-wrap">
 
       <div class="calendar">
 
-        <div class="calendar-top"></div>
-
-        <div class="calendar-ring"></div>
-
-        <div class="calendar-content">
-
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-          <span class="calendar-dot"></span>
-
-        </div>
+        <div class="calendar-pin"></div>
 
       </div>
-
-      <div class="check"></div>
 
     </div>
 
 
-    <!-- BADGE -->
-
-    <div class="badge">
-
-      <span class="badge-dot"></span>
-
-      e-RESERVASI WORKSHOP
-
+    <!-- LABEL -->
+    <div class="label">
+      e-Reservasi
     </div>
 
 
     <!-- TITLE -->
-
     <h1>
-      Transformasi Digital<br>
+      Workshop Transformasi Digital<br>
       Puskesmas
     </h1>
 
 
+    <!-- SUBTITLE -->
     <div class="subtitle">
       Kabupaten Kulon Progo
     </div>
 
 
+    <!-- TAGLINE -->
     <div class="tagline">
       “Sesarengan Mbangun Ekosistem Digital
       Kesehatan Kulon Progo”
     </div>
 
 
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+
     <!-- LOADING -->
+    <div class="loading">
 
-    <div class="loading-area">
+      <div class="loading-info">
 
-      <div class="loading-text">
-
-        <span id="loadingStatus">
-          Menyiapkan reservasi...
+        <span id="loadingText">
+          Menyiapkan reservasi
         </span>
 
         <span id="percent">
@@ -881,7 +472,7 @@ h1 {
         class="status"
         id="status">
 
-        Menghubungkan ke sistem e-Reservasi...
+        Memuat sistem e-Reservasi...
 
       </div>
 
@@ -889,18 +480,17 @@ h1 {
 
 
     <!-- FOOTER -->
-
     <div class="footer">
 
       <strong>
-        WORKSHOP TRANSFORMASI DIGITAL PUSKESMAS
+        Dinas Kesehatan Kabupaten Kulon Progo
       </strong>
+
       <br>
 
-      Kabupaten Kulon Progo · Daerah Istimewa Yogyakarta
+      Ekosistem Digital Kesehatan Kulon Progo
 
     </div>
-
 
   </div>
 
@@ -909,30 +499,26 @@ h1 {
 
 <script>
 
-/* =========================================
-   ELEMENT
-========================================= */
-
 const loader =
   document.getElementById("loader");
 
 const iframe =
   document.getElementById("app");
 
+const progressBar =
+  document.getElementById("progressBar");
+
 const percent =
   document.getElementById("percent");
 
-const loadingStatus =
-  document.getElementById("loadingStatus");
+const loadingText =
+  document.getElementById("loadingText");
 
 const status =
   document.getElementById("status");
 
-const progressBar =
-  document.getElementById("progressBar");
-
-
 let progress = 0;
+
 let finished = false;
 
 
@@ -940,68 +526,67 @@ let finished = false;
    PROGRESS
 ========================================= */
 
-const progressTimer =
-  setInterval(() => {
+const timer = setInterval(() => {
 
-    if (progress < 93) {
+  if (progress < 92) {
 
-      progress +=
-        Math.floor(Math.random() * 4) + 1;
+    progress +=
+      Math.floor(Math.random() * 3) + 1;
 
-      if (progress > 93) {
-        progress = 93;
-      }
+    if (progress > 92) {
+      progress = 92;
+    }
 
-      percent.textContent =
-        progress + "%";
+    progressBar.style.width =
+      progress + "%";
 
-      progressBar.style.width =
-        progress + "%";
+    percent.textContent =
+      progress + "%";
 
 
-      if (progress < 25) {
+    if (progress < 30) {
 
-        loadingStatus.textContent =
-          "Menyiapkan reservasi...";
+      loadingText.textContent =
+        "Menyiapkan reservasi";
 
-        status.textContent =
-          "Menghubungkan ke sistem e-Reservasi...";
-
-      }
-
-      else if (progress < 50) {
-
-        loadingStatus.textContent =
-          "Memuat sistem...";
-
-        status.textContent =
-          "Menyiapkan formulir reservasi workshop...";
-
-      }
-
-      else if (progress < 75) {
-
-        loadingStatus.textContent =
-          "Menyiapkan data...";
-
-        status.textContent =
-          "Memuat informasi kegiatan...";
-
-      }
-
-      else {
-
-        loadingStatus.textContent =
-          "Hampir selesai...";
-
-        status.textContent =
-          "Membuka halaman e-Reservasi...";
-
-      }
+      status.textContent =
+        "Memuat sistem e-Reservasi...";
 
     }
 
-  }, 220);
+    else if (progress < 60) {
+
+      loadingText.textContent =
+        "Memuat informasi";
+
+      status.textContent =
+        "Menyiapkan formulir reservasi...";
+
+    }
+
+    else if (progress < 85) {
+
+      loadingText.textContent =
+        "Menyiapkan aplikasi";
+
+      status.textContent =
+        "Memuat halaman kegiatan...";
+
+    }
+
+    else {
+
+      loadingText.textContent =
+        "Hampir selesai";
+
+      status.textContent =
+        "Membuka e-Reservasi...";
+
+    }
+
+  }
+
+}, 250);
 
 
 /* =========================================
@@ -1014,15 +599,13 @@ function hideLoader() {
 
   finished = true;
 
-  clearInterval(progressTimer);
-
-  progress = 100;
-
-  percent.textContent = "100%";
+  clearInterval(timer);
 
   progressBar.style.width = "100%";
 
-  loadingStatus.textContent =
+  percent.textContent = "100%";
+
+  loadingText.textContent =
     "Selesai";
 
   status.textContent =
@@ -1032,8 +615,7 @@ function hideLoader() {
 
     loader.classList.add("hide");
 
-  }, 600);
-
+  }, 500);
 }
 
 
@@ -1049,7 +631,7 @@ iframe.addEventListener(
 
       hideLoader();
 
-    }, 700);
+    }, 600);
 
   }
 );
@@ -1063,7 +645,7 @@ setTimeout(() => {
 
   hideLoader();
 
-}, 9000);
+}, 8000);
 
 </script>
 
