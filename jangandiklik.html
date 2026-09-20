@@ -1,0 +1,376 @@
+```html id="9zc5mm"
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesan Random Buat Kamu ✨</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 20% 15%,rgba(255,175,205,.55),transparent 30%),
+    radial-gradient(circle at 85% 20%,rgba(170,160,255,.42),transparent 30%),
+    radial-gradient(circle at 50% 90%,rgba(255,220,160,.40),transparent 32%),
+    linear-gradient(135deg,#fff7fa,#f7f5ff);
+  animation:bgMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove{
+  0%{background-position:0 0}
+  100%{background-position:100% 100%}
+}
+
+.card{
+  width:min(440px,100%);
+  min-height:620px;
+  padding:38px 24px 30px;
+  border-radius:34px;
+  background:rgba(255,255,255,.74);
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 70px rgba(90,60,90,.18);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  animation:cardFloat 4s ease-in-out infinite;
+}
+
+@keyframes cardFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+
+.top{
+  font-size:12px;
+  letter-spacing:2px;
+  color:#a48694;
+  font-weight:700;
+  margin-bottom:18px;
+}
+
+.main-icon{
+  font-size:64px;
+  display:inline-block;
+  animation:iconBeat 1.3s infinite;
+}
+
+@keyframes iconBeat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+}
+
+h1{
+  margin-top:18px;
+  font-size:28px;
+  color:#332b31;
+}
+
+.subtitle{
+  margin:13px auto 22px;
+  max-width:330px;
+  color:#786b72;
+  font-size:15px;
+  line-height:1.65;
+}
+
+.message{
+  min-height:165px;
+  margin:22px 0;
+  padding:24px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:26px;
+  background:rgba(255,255,255,.84);
+  box-shadow:0 12px 30px rgba(100,60,80,.08);
+  color:#40343c;
+  font-size:18px;
+  line-height:1.65;
+  font-weight:650;
+  white-space:pre-line;
+  opacity:0;
+  transform:scale(.88) translateY(16px);
+  transition:.35s ease;
+}
+
+.message.show{
+  opacity:1;
+  transform:scale(1) translateY(0);
+  animation:messagePop .45s ease;
+}
+
+@keyframes messagePop{
+  0%{transform:scale(.88)}
+  55%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+button{
+  border:none;
+  padding:15px 30px;
+  border-radius:50px;
+  background:linear-gradient(135deg,#ff6f91,#ff9bb3,#9d8cff);
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(255,90,140,.30);
+}
+
+button:active{transform:scale(.95)}
+
+.hint{
+  margin-top:17px;
+  font-size:12px;
+  color:#aa98a1;
+}
+
+.footer{
+  position:absolute;
+  bottom:16px;
+  left:0;
+  width:100%;
+  font-size:11px;
+  color:#b9a7b0;
+}
+
+.floating{
+  position:fixed;
+  bottom:-50px;
+  pointer-events:none;
+  z-index:9999;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0) rotate(0);opacity:1}
+  to{transform:translateY(-120vh) rotate(420deg);opacity:0}
+}
+
+.sparkle{
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  animation:sparkle .9s ease forwards;
+}
+
+@keyframes sparkle{
+  0%{opacity:0;transform:scale(.2)}
+  50%{opacity:1;transform:scale(1.4)}
+  100%{opacity:0;transform:scale(.1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="top">
+    PESAN RANDOM BUAT KAMU ✨
+  </div>
+
+  <div class="main-icon" id="mainIcon">💌</div>
+
+  <h1>
+    Klik aja...
+  </h1>
+
+  <div class="subtitle">
+    Isinya bisa pantun, receh, romantis, bijak, atau sekadar bikin senyum. 😄
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <button onclick="randomMessage()" id="button">
+    Klik buat buka pesan ❤️
+  </button>
+
+  <div class="hint">
+    boleh diklik berkali-kali, gratis kok 😌
+  </div>
+
+  <div class="footer">
+    efek samping: senyum sendiri tanpa alasan
+  </div>
+
+</div>
+
+<script>
+
+const messages = [
+
+  "Pergi pagi membeli jamu,\npulangnya mampir beli roti.\nKalau hidup mulai mengganggu,\nsenyum dulu, biar hati nggak emosi. 😂",
+
+  "Pergi ke pasar membeli ketan,\nketannya jatuh kena sandal.\nKalau sedang banyak pikiran,\njangan lupa tetap kelihatan mahal. 😌😂",
+
+  "Burung pipit hinggap di pagar,\npagarnya dekat pohon jati.\nKalau pagi belum juga segar,\ncoba senyum dari dalam hati. 😄",
+
+  "Beli mangga di pinggir jalan,\npulangnya bawa buah pepaya.\nKalau hidup penuh tekanan,\njangan lupa ketawa, nanti cepat tua. 😂",
+
+  "Hidup itu seperti kopi. Kadang pahit, kadang manis. Yang penting jangan sampai tumpah ke keyboard. 😂",
+
+  "Jangan terlalu memikirkan masa lalu. Kecuali kamu lupa naruh charger di mana. 😆",
+
+  "Kalau hidup terasa berat, coba cek dulu. Siapa tahu tasmu memang kebanyakan barang. 😂",
+
+  "Tidak semua masalah harus dipikirkan sekarang. Beberapa bisa ditunda sampai kamu selesai ngopi. ☕😌",
+
+  "Jangan bandingkan hidupmu dengan orang lain. Bisa jadi mereka juga bingung, cuma fotonya bagus. 😂",
+
+  "Kalau hidup belum sesuai rencana, tenang. Bahkan Google Maps saja kadang menyuruh putar balik. 😄",
+
+  "Kalau kamu capek, istirahat. Kalau sedih, cerita. Kalau kangen... nah, itu mulai menarik. 😌❤️",
+
+  "Katanya senyum itu gratis. Tapi kalau senyummu, efeknya terasa mahal. 😂❤️",
+
+  "Kalau hari ini belum ada yang bilang kamu keren, sekarang sudah. 😄❤️",
+
+  "Senyum dulu. Siapa tahu ada yang diam-diam ikut bahagia karena lihat kamu bahagia. ❤️",
+
+  "Kalau kamu jadi notifikasi, mungkin kamu satu-satunya yang nggak akan aku swipe. 😂❤️",
+
+  "Ada orang yang bikin suasana jadi lebih enak cuma karena dia muncul. Bisa jadi kamu. 😌",
+
+  "Kalau perhatian bisa dikirim lewat paket, mungkin alamatmu sudah penuh kardus. 😂❤️",
+
+  "Kalau hari ini terasa berat, ingat... kopi juga pahit sebelum ditambah gula. 😄☕",
+
+  "Jangan terlalu keras sama diri sendiri. Bahkan HP saja kalau panas disuruh istirahat. 😌📱",
+
+  "Semoga yang datang hari ini bukan cuma kesibukan, tapi juga rezeki dan kabar baik. ✨",
+
+  "Jangan menyerah. Kalau nggak bisa berlari, jalan. Kalau capek, duduk sebentar. Tapi jangan ngilang. 😂",
+
+  "Kalau sekarang kamu senyum sedikit, berarti halaman ini berhasil. Kalau belum, klik sekali lagi. 😂",
+
+  "Pesan hari ini: jangan terlalu serius. Hidup sudah cukup serius tanpa bantuan wajah cemberutmu. 😄",
+
+  "Kalau hidup ini playlist, semoga lagu hari ini enak dan nggak ada iklan. 😂",
+
+  "Kadang kamu nggak butuh motivasi panjang. Cukup diingatkan bahwa kamu sudah sejauh ini. ❤️",
+
+  "Satu hal kecil hari ini: jangan lupa bangga sama diri sendiri. Walau cuma karena berhasil bertahan tanpa drama. 😂",
+
+  "Kalau hati lagi kusut, jangan disetrika. Istirahat saja dulu. 😆",
+
+  "Tetap rendah hati. Tapi kalau memang keren, ya jangan disembunyikan juga. 😂",
+
+  "Yang penting bukan seberapa cepat kamu sampai, tapi jangan berhenti gara-gara malas pakai sandal. 😂",
+
+  "Kamu nggak harus sempurna. Jadi seseorang yang menyenangkan saja sudah cukup keren. 😌❤️"
+];
+
+const icons = [
+  "💌","❤️","😂","✨","😌","😆","💕","🌷","🌈","💖","☕"
+];
+
+const buttonTexts = [
+  "Klik lagi 😂",
+  "Satu lagi ❤️",
+  "Masih penasaran? 😆",
+  "Buka pesan lain ✨",
+  "Lagi dong 😌",
+  "Klik kalau masih kuat 👀"
+];
+
+let lastIndex = -1;
+
+function randomMessage(){
+
+  const message = document.getElementById("message");
+  const button = document.getElementById("button");
+  const mainIcon = document.getElementById("mainIcon");
+
+  let index;
+
+  do{
+    index = Math.floor(Math.random()*messages.length);
+  }while(index === lastIndex);
+
+  lastIndex = index;
+
+  message.classList.remove("show");
+
+  setTimeout(()=>{
+    message.textContent = messages[index];
+    message.classList.add("show");
+  },120);
+
+  mainIcon.textContent =
+    icons[Math.floor(Math.random()*icons.length)];
+
+  button.textContent =
+    buttonTexts[Math.floor(Math.random()*buttonTexts.length)];
+
+  createFloating();
+  createSparkles();
+}
+
+function createFloating(){
+
+  const items = [
+    "❤️","💕","💖","✨","🤍","😂","☕","🌷","🌈"
+  ];
+
+  for(let i=0;i<12;i++){
+
+    setTimeout(()=>{
+
+      const el = document.createElement("div");
+      el.className = "floating";
+      el.textContent =
+        items[Math.floor(Math.random()*items.length)];
+
+      el.style.left = Math.random()*100 + "vw";
+      el.style.fontSize = (15 + Math.random()*20) + "px";
+      el.style.animationDuration = (3 + Math.random()*3) + "s";
+
+      document.body.appendChild(el);
+
+      setTimeout(()=>el.remove(),6500);
+
+    },i*90);
+  }
+}
+
+function createSparkles(){
+
+  for(let i=0;i<10;i++){
+
+    setTimeout(()=>{
+
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.textContent = "✨";
+
+      s.style.left = Math.random()*100 + "vw";
+      s.style.top = Math.random()*100 + "vh";
+      s.style.fontSize = (12 + Math.random()*18) + "px";
+
+      document.body.appendChild(s);
+
+      setTimeout(()=>s.remove(),1000);
+
+    },i*80);
+  }
+}
+
+setTimeout(()=>{
+  randomMessage();
+},700);
+
+</script>
+
+</body>
+</html>
+```
