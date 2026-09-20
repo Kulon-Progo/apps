@@ -2,195 +2,674 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>Pesan Random Buat Kamu ✨</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+}
 
 body{
   min-height:100vh;
-  overflow:hidden;
+  min-height:100dvh;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:20px;
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  padding:
+    max(14px, env(safe-area-inset-top))
+    14px
+    max(20px, env(safe-area-inset-bottom));
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  overflow-x:hidden;
+  overflow-y:auto;
+
   background:
     radial-gradient(circle at 20% 15%,rgba(255,175,205,.55),transparent 30%),
     radial-gradient(circle at 85% 20%,rgba(170,160,255,.42),transparent 30%),
     radial-gradient(circle at 50% 90%,rgba(255,220,160,.40),transparent 32%),
     linear-gradient(135deg,#fff7fa,#f7f5ff);
+
+  background-size:140% 140%;
   animation:bgMove 10s ease-in-out infinite alternate;
 }
 
 @keyframes bgMove{
-  0%{background-position:0 0}
-  100%{background-position:100% 100%}
+  0%{
+    background-position:0% 0%;
+  }
+
+  100%{
+    background-position:100% 100%;
+  }
 }
 
 .card{
   width:min(440px,100%);
-  min-height:620px;
-  padding:38px 24px 30px;
-  border-radius:34px;
+  min-height:0;
+
+  padding:32px 22px 24px;
+
+  border-radius:30px;
+
   background:rgba(255,255,255,.74);
+
+  border:1px solid rgba(255,255,255,.88);
+
   backdrop-filter:blur(20px);
-  box-shadow:0 25px 70px rgba(90,60,90,.18);
+  -webkit-backdrop-filter:blur(20px);
+
+  box-shadow:
+    0 25px 70px rgba(90,60,90,.18),
+    inset 0 0 35px rgba(255,255,255,.25);
+
   text-align:center;
+
   position:relative;
+
   overflow:hidden;
+
+  margin:auto;
+
   animation:cardFloat 4s ease-in-out infinite;
 }
 
 @keyframes cardFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-7px)}
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-6px);
+  }
+}
+
+.glow{
+  position:absolute;
+
+  width:220px;
+  height:220px;
+
+  border-radius:50%;
+
+  filter:blur(60px);
+
+  opacity:.35;
+
+  pointer-events:none;
+
+  animation:glowMove 8s ease-in-out infinite alternate;
+}
+
+.glow.one{
+  background:#ff8fb3;
+  top:-90px;
+  left:-80px;
+}
+
+.glow.two{
+  background:#9d8cff;
+  right:-90px;
+  bottom:-80px;
+}
+
+@keyframes glowMove{
+  from{
+    transform:translate(0,0) scale(1);
+  }
+
+  to{
+    transform:translate(30px,35px) scale(1.25);
+  }
 }
 
 .top{
+  position:relative;
+  z-index:2;
+
   font-size:12px;
   letter-spacing:2px;
+
   color:#a48694;
+
   font-weight:700;
+
   margin-bottom:18px;
 }
 
 .main-icon{
+  position:relative;
+  z-index:2;
+
   font-size:64px;
+
   display:inline-block;
+
   animation:iconBeat 1.3s infinite;
+
+  filter:drop-shadow(
+    0 9px 15px rgba(255,90,130,.22)
+  );
 }
 
 @keyframes iconBeat{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.15)}
+  0%,100%{
+    transform:scale(1) rotate(0deg);
+  }
+
+  35%{
+    transform:scale(1.15) rotate(-4deg);
+  }
+
+  65%{
+    transform:scale(1.10) rotate(4deg);
+  }
 }
 
 h1{
-  margin-top:18px;
+  position:relative;
+  z-index:2;
+
+  margin-top:16px;
+
   font-size:28px;
+
   color:#332b31;
+
+  line-height:1.25;
 }
 
 .subtitle{
-  margin:13px auto 22px;
+  position:relative;
+  z-index:2;
+
+  margin:13px auto 20px;
+
   max-width:330px;
+
   color:#786b72;
+
   font-size:15px;
+
   line-height:1.65;
 }
 
 .message{
-  min-height:165px;
-  margin:22px 0;
-  padding:24px 20px;
+  position:relative;
+  z-index:2;
+
+  min-height:145px;
+
+  margin:18px 0;
+
+  padding:21px 18px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:26px;
+
+  border-radius:24px;
+
   background:rgba(255,255,255,.84);
-  box-shadow:0 12px 30px rgba(100,60,80,.08);
+
+  box-shadow:
+    0 12px 30px rgba(100,60,80,.08),
+    inset 0 0 18px rgba(255,255,255,.7);
+
   color:#40343c;
-  font-size:18px;
-  line-height:1.65;
+
+  font-size:17px;
+
+  line-height:1.6;
+
   font-weight:650;
+
   white-space:pre-line;
+
   opacity:0;
+
   transform:scale(.88) translateY(16px);
+
   transition:.35s ease;
 }
 
 .message.show{
   opacity:1;
+
   transform:scale(1) translateY(0);
+
   animation:messagePop .45s ease;
 }
 
 @keyframes messagePop{
-  0%{transform:scale(.88)}
-  55%{transform:scale(1.05)}
-  100%{transform:scale(1)}
+  0%{
+    transform:scale(.88);
+  }
+
+  55%{
+    transform:scale(1.05);
+  }
+
+  100%{
+    transform:scale(1);
+  }
 }
 
 button{
+  position:relative;
+  z-index:2;
+
   border:none;
-  padding:15px 30px;
+  outline:none;
+
+  padding:14px 28px;
+
   border-radius:50px;
-  background:linear-gradient(135deg,#ff6f91,#ff9bb3,#9d8cff);
-  color:white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff6f91,
+      #ff9bb3,
+      #9d8cff
+    );
+
+  background-size:200% 200%;
+
+  color:#fff;
+
   font-size:16px;
+
   font-weight:800;
+
   cursor:pointer;
-  box-shadow:0 12px 28px rgba(255,90,140,.30);
+
+  box-shadow:
+    0 12px 28px rgba(255,90,140,.30),
+    0 0 0 0 rgba(255,105,145,.35);
+
+  animation:
+    buttonGradient 4s ease infinite,
+    pulseShadow 2s infinite;
+
+  transition:
+    transform .2s ease;
 }
 
-button:active{transform:scale(.95)}
+@keyframes buttonGradient{
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+}
+
+@keyframes pulseShadow{
+  0%{
+    box-shadow:
+      0 12px 28px rgba(255,90,140,.30),
+      0 0 0 0 rgba(255,105,145,.32);
+  }
+
+  70%{
+    box-shadow:
+      0 12px 28px rgba(255,90,140,.30),
+      0 0 0 14px rgba(255,105,145,0);
+  }
+
+  100%{
+    box-shadow:
+      0 12px 28px rgba(255,90,140,.30),
+      0 0 0 0 rgba(255,105,145,0);
+  }
+}
+
+button:active{
+  transform:scale(.95);
+}
 
 .hint{
-  margin-top:17px;
+  position:relative;
+  z-index:2;
+
+  margin-top:14px;
+
   font-size:12px;
+
   color:#aa98a1;
 }
 
-.footer{
-  position:absolute;
-  bottom:16px;
-  left:0;
-  width:100%;
+.watermark{
+  position:relative;
+  z-index:2;
+
+  margin-top:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:6px;
+
   font-size:11px;
-  color:#b9a7b0;
+
+  color:rgba(102,82,94,.45);
+
+  letter-spacing:.7px;
+
+  user-select:none;
+}
+
+.watermark span{
+  font-weight:700;
+
+  color:rgba(102,82,94,.58);
+}
+
+.watermark-heart{
+  display:inline-block;
+
+  font-size:10px;
+
+  animation:watermarkBeat 1.5s infinite;
+}
+
+@keyframes watermarkBeat{
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.25);
+  }
 }
 
 .floating{
   position:fixed;
+
   bottom:-50px;
+
   pointer-events:none;
+
   z-index:9999;
+
   animation:floatUp linear forwards;
 }
 
 @keyframes floatUp{
-  from{transform:translateY(0) rotate(0);opacity:1}
-  to{transform:translateY(-120vh) rotate(420deg);opacity:0}
+  from{
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(.7);
+
+    opacity:1;
+  }
+
+  to{
+    transform:
+      translateY(-120vh)
+      rotate(420deg)
+      scale(1.3);
+
+    opacity:0;
+  }
 }
 
 .sparkle{
   position:fixed;
-  pointer-events:none;
+
   z-index:9999;
+
+  pointer-events:none;
+
   animation:sparkle .9s ease forwards;
 }
 
 @keyframes sparkle{
-  0%{opacity:0;transform:scale(.2)}
-  50%{opacity:1;transform:scale(1.4)}
-  100%{opacity:0;transform:scale(.1)}
+  0%{
+    opacity:0;
+    transform:scale(.2) rotate(0deg);
+  }
+
+  45%{
+    opacity:1;
+    transform:scale(1.4) rotate(100deg);
+  }
+
+  100%{
+    opacity:0;
+    transform:scale(.1) rotate(220deg);
+  }
+}
+
+.confetti{
+  position:fixed;
+
+  width:8px;
+  height:13px;
+
+  border-radius:3px;
+
+  z-index:9999;
+
+  pointer-events:none;
+
+  animation:confettiFall linear forwards;
+}
+
+@keyframes confettiFall{
+  0%{
+    transform:translateY(-10vh) rotate(0deg);
+    opacity:1;
+  }
+
+  100%{
+    transform:translateY(115vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+/* MOBILE */
+@media(max-width:480px){
+
+  body{
+    align-items:flex-start;
+
+    padding-top:
+      max(12px, env(safe-area-inset-top));
+
+    padding-bottom:
+      max(22px, env(safe-area-inset-bottom));
+  }
+
+  .card{
+    width:100%;
+
+    min-height:auto;
+
+    padding:25px 17px 20px;
+
+    border-radius:25px;
+
+    margin:0 auto;
+
+    animation:none;
+  }
+
+  .top{
+    margin-bottom:12px;
+
+    font-size:10px;
+
+    letter-spacing:1.6px;
+  }
+
+  .main-icon{
+    font-size:52px;
+  }
+
+  h1{
+    margin-top:12px;
+
+    font-size:23px;
+  }
+
+  .subtitle{
+    margin:10px auto 15px;
+
+    font-size:13px;
+
+    line-height:1.5;
+  }
+
+  .message{
+    min-height:125px;
+
+    margin:15px 0;
+
+    padding:18px 15px;
+
+    font-size:16px;
+
+    line-height:1.55;
+  }
+
+  button{
+    padding:13px 24px;
+
+    font-size:15px;
+  }
+
+  .hint{
+    margin-top:12px;
+
+    font-size:11px;
+  }
+
+  .watermark{
+    margin-top:16px;
+
+    font-size:10px;
+  }
+}
+
+/* HP PENDEK */
+@media(max-width:480px) and (max-height:700px){
+
+  body{
+    padding-top:8px;
+  }
+
+  .card{
+    padding-top:18px;
+  }
+
+  .main-icon{
+    font-size:44px;
+  }
+
+  h1{
+    font-size:21px;
+  }
+
+  .subtitle{
+    font-size:12px;
+
+    margin-bottom:10px;
+  }
+
+  .message{
+    min-height:105px;
+
+    font-size:15px;
+
+    margin:12px 0;
+
+    padding:15px;
+  }
+
+  button{
+    padding:11px 21px;
+
+    font-size:14px;
+  }
+
+  .hint{
+    margin-top:9px;
+  }
+
+  .watermark{
+    margin-top:12px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="card" id="card">
+
+  <div class="glow one"></div>
+  <div class="glow two"></div>
 
   <div class="top">
     PESAN RANDOM BUAT KAMU ✨
   </div>
 
-  <div class="main-icon" id="mainIcon">💌</div>
+  <div class="main-icon" id="mainIcon">
+    💌
+  </div>
 
   <h1>
     Klik aja...
   </h1>
 
   <div class="subtitle">
-    Isinya bisa pantun, receh, romantis, bijak, atau sekadar bikin senyum. 😄
+    Isinya bisa pantun, receh, romantis,
+    bijak, atau sekadar bikin senyum. 😄
   </div>
 
   <div class="message" id="message"></div>
 
-  <button onclick="randomMessage()" id="button">
+  <button
+    type="button"
+    onclick="randomMessage()"
+    id="button">
     Klik buat buka pesan ❤️
   </button>
 
@@ -198,8 +677,9 @@ button:active{transform:scale(.95)}
     boleh diklik berkali-kali, gratis kok 😌
   </div>
 
-  <div class="footer">
-    efek samping: senyum sendiri tanpa alasan
+  <div class="watermark">
+    <span class="watermark-heart">♡</span>
+    from <span>PLAT — H431B</span>
   </div>
 
 </div>
@@ -216,6 +696,10 @@ const messages = [
 
   "Beli mangga di pinggir jalan,\npulangnya bawa buah pepaya.\nKalau hidup penuh tekanan,\njangan lupa ketawa, nanti cepat tua. 😂",
 
+  "Pergi berjalan membawa payung,\npulangnya mampir membeli tahu.\nKalau hidup bikin bingung,\nsantai... bukan kamu saja yang nggak tahu. 😂",
+
+  "Naik sepeda ke kota lama,\npulangnya membawa bunga melati.\nNggak harus sempurna untuk jadi istimewa,\ncukup jadi alasan seseorang tersenyum hari ini. 😌❤️",
+
   "Hidup itu seperti kopi. Kadang pahit, kadang manis. Yang penting jangan sampai tumpah ke keyboard. 😂",
 
   "Jangan terlalu memikirkan masa lalu. Kecuali kamu lupa naruh charger di mana. 😆",
@@ -227,6 +711,10 @@ const messages = [
   "Jangan bandingkan hidupmu dengan orang lain. Bisa jadi mereka juga bingung, cuma fotonya bagus. 😂",
 
   "Kalau hidup belum sesuai rencana, tenang. Bahkan Google Maps saja kadang menyuruh putar balik. 😄",
+
+  "Jadilah seperti charger: dicari saat dibutuhkan dan bikin orang merasa hidup lagi. 😂",
+
+  "Kalau keadaan belum sesuai keinginan, jangan menyerah. Bisa jadi hidup sedang loading. 😆",
 
   "Kalau kamu capek, istirahat. Kalau sedih, cerita. Kalau kangen... nah, itu mulai menarik. 😌❤️",
 
@@ -242,13 +730,21 @@ const messages = [
 
   "Kalau perhatian bisa dikirim lewat paket, mungkin alamatmu sudah penuh kardus. 😂❤️",
 
+  "Aku nggak bilang kamu bikin nyaman. Tapi kok kalau kamu muncul, suasana jadi beda. 👀❤️",
+
+  "Kalau kamu tiba-tiba senyum setelah baca ini, tenang... nggak ada yang tahu. Kecuali layar HP-mu. 😂",
+
+  "Kadang ada orang yang nggak perlu banyak bicara untuk bikin suasana jadi menyenangkan. Bisa jadi kamu salah satunya. 😌❤️",
+
+  "Kalau ada lomba bikin orang penasaran, mungkin kamu sudah masuk final. 😂❤️",
+
   "Kalau hari ini terasa berat, ingat... kopi juga pahit sebelum ditambah gula. 😄☕",
 
   "Jangan terlalu keras sama diri sendiri. Bahkan HP saja kalau panas disuruh istirahat. 😌📱",
 
   "Semoga yang datang hari ini bukan cuma kesibukan, tapi juga rezeki dan kabar baik. ✨",
 
-  "Jangan menyerah. Kalau nggak bisa berlari, jalan. Kalau capek, duduk sebentar. Tapi jangan ngilang. 😂",
+  "Kalau nggak bisa berlari, jalan. Kalau capek, duduk sebentar. Tapi jangan ngilang. 😂",
 
   "Kalau sekarang kamu senyum sedikit, berarti halaman ini berhasil. Kalau belum, klik sekali lagi. 😂",
 
@@ -266,11 +762,47 @@ const messages = [
 
   "Yang penting bukan seberapa cepat kamu sampai, tapi jangan berhenti gara-gara malas pakai sandal. 😂",
 
-  "Kamu nggak harus sempurna. Jadi seseorang yang menyenangkan saja sudah cukup keren. 😌❤️"
+  "Kamu nggak harus sempurna. Jadi seseorang yang menyenangkan saja sudah cukup keren. 😌❤️",
+
+  "Kalau hari ini belum sesuai ekspektasi, tenang. Besok masih ada kesempatan untuk salah ekspektasi lagi. 😂",
+
+  "Senyum itu sederhana, tapi kadang bisa menyelamatkan mood seharian. Jadi... coba sekali lagi. 😄",
+
+  "Semoga harimu lebih ringan, pikiranmu lebih tenang, dan rekeningmu lebih berisi. Amin yang paling serius. 😂",
+
+  "Orang bilang bahagia itu sederhana. Iya... sampai lihat harga kebutuhan hidup. 😂",
+
+  "Jangan takut jadi berbeda. Bahkan kaus kaki saja sering kehilangan pasangannya dan tetap bertahan hidup. 😂",
+
+  "Kalau kamu lagi bingung harus mulai dari mana, mulai dari yang paling mudah: tarik napas, senyum, lalu lanjut. 😌",
+
+  "Tidak semua hal harus punya jawaban sekarang. Kadang jawabannya baru muncul setelah makan. 😂",
+
+  "Semoga hari ini ada satu kejadian kecil yang diam-diam bikin kamu bilang, 'oh... ternyata hidup masih lucu juga.' 😄",
+
+  "Kalau seseorang bikin kamu tersenyum tanpa alasan, jangan panik. Bisa jadi efek samping dari nyaman. 👀❤️",
+
+  "Mungkin kamu nggak sadar, tapi energi baikmu bisa jadi alasan orang lain merasa harinya lebih ringan. 😌✨",
+
+  "Tenang saja. Kamu nggak harus selalu kuat. Kadang cukup tetap ada dan terus mencoba. ❤️",
+
+  "Kalau kamu baca sampai sini, berarti kita sepakat satu hal: kamu cukup penasaran. 😂"
 ];
 
 const icons = [
-  "💌","❤️","😂","✨","😌","😆","💕","🌷","🌈","💖","☕"
+  "💌",
+  "❤️",
+  "😂",
+  "✨",
+  "😌",
+  "😆",
+  "💕",
+  "🌷",
+  "🌈",
+  "💖",
+  "☕",
+  "🥰",
+  "🌤️"
 ];
 
 const buttonTexts = [
@@ -279,64 +811,134 @@ const buttonTexts = [
   "Masih penasaran? 😆",
   "Buka pesan lain ✨",
   "Lagi dong 😌",
-  "Klik kalau masih kuat 👀"
+  "Klik kalau masih kuat 👀",
+  "Coba keberuntunganmu 😂",
+  "Masih mau senyum? ❤️"
 ];
 
 let lastIndex = -1;
 
 function randomMessage(){
 
-  const message = document.getElementById("message");
-  const button = document.getElementById("button");
-  const mainIcon = document.getElementById("mainIcon");
+  const message =
+    document.getElementById("message");
+
+  const button =
+    document.getElementById("button");
+
+  const mainIcon =
+    document.getElementById("mainIcon");
+
+  const card =
+    document.getElementById("card");
 
   let index;
 
   do{
-    index = Math.floor(Math.random()*messages.length);
+    index =
+      Math.floor(
+        Math.random() *
+        messages.length
+      );
   }while(index === lastIndex);
 
   lastIndex = index;
 
   message.classList.remove("show");
 
+  if(card.animate){
+
+    card.animate(
+      [
+        {transform:"scale(1)"},
+        {transform:"scale(.985)"},
+        {transform:"scale(1.01)"},
+        {transform:"scale(1)"}
+      ],
+      {
+        duration:420,
+        easing:"ease"
+      }
+    );
+  }
+
   setTimeout(()=>{
-    message.textContent = messages[index];
+
+    message.textContent =
+      messages[index];
+
     message.classList.add("show");
+
   },120);
 
   mainIcon.textContent =
-    icons[Math.floor(Math.random()*icons.length)];
+    icons[
+      Math.floor(
+        Math.random() *
+        icons.length
+      )
+    ];
 
   button.textContent =
-    buttonTexts[Math.floor(Math.random()*buttonTexts.length)];
+    buttonTexts[
+      Math.floor(
+        Math.random() *
+        buttonTexts.length
+      )
+    ];
 
   createFloating();
   createSparkles();
+  createConfetti();
 }
 
 function createFloating(){
 
   const items = [
-    "❤️","💕","💖","✨","🤍","😂","☕","🌷","🌈"
+    "❤️",
+    "💕",
+    "💖",
+    "✨",
+    "🤍",
+    "😂",
+    "☕",
+    "🌷",
+    "🌈",
+    "🥰"
   ];
 
-  for(let i=0;i<12;i++){
+  for(let i=0;i<10;i++){
 
     setTimeout(()=>{
 
-      const el = document.createElement("div");
-      el.className = "floating";
-      el.textContent =
-        items[Math.floor(Math.random()*items.length)];
+      const el =
+        document.createElement("div");
 
-      el.style.left = Math.random()*100 + "vw";
-      el.style.fontSize = (15 + Math.random()*20) + "px";
-      el.style.animationDuration = (3 + Math.random()*3) + "s";
+      el.className =
+        "floating";
+
+      el.textContent =
+        items[
+          Math.floor(
+            Math.random() *
+            items.length
+          )
+        ];
+
+      el.style.left =
+        Math.random()*100+"vw";
+
+      el.style.fontSize =
+        (15+Math.random()*20)+"px";
+
+      el.style.animationDuration =
+        (3+Math.random()*3)+"s";
 
       document.body.appendChild(el);
 
-      setTimeout(()=>el.remove(),6500);
+      setTimeout(()=>{
+        el.remove();
+      },6500);
 
     },i*90);
   }
@@ -344,23 +946,81 @@ function createFloating(){
 
 function createSparkles(){
 
-  for(let i=0;i<10;i++){
+  for(let i=0;i<8;i++){
 
     setTimeout(()=>{
 
-      const s = document.createElement("div");
-      s.className = "sparkle";
-      s.textContent = "✨";
+      const s =
+        document.createElement("div");
 
-      s.style.left = Math.random()*100 + "vw";
-      s.style.top = Math.random()*100 + "vh";
-      s.style.fontSize = (12 + Math.random()*18) + "px";
+      s.className =
+        "sparkle";
+
+      s.textContent =
+        "✨";
+
+      s.style.left =
+        Math.random()*100+"vw";
+
+      s.style.top =
+        Math.random()*100+"vh";
+
+      s.style.fontSize =
+        (12+Math.random()*18)+"px";
 
       document.body.appendChild(s);
 
-      setTimeout(()=>s.remove(),1000);
+      setTimeout(()=>{
+        s.remove();
+      },1000);
 
     },i*80);
+  }
+}
+
+function createConfetti(){
+
+  const colors = [
+    "#ff6f91",
+    "#9d8cff",
+    "#ffbd69",
+    "#8ed1c5",
+    "#ffffff"
+  ];
+
+  for(let i=0;i<14;i++){
+
+    const c =
+      document.createElement("div");
+
+    c.className =
+      "confetti";
+
+    c.style.left =
+      Math.random()*100+"vw";
+
+    c.style.top =
+      (-10-Math.random()*15)+"vh";
+
+    c.style.background =
+      colors[
+        Math.floor(
+          Math.random() *
+          colors.length
+        )
+      ];
+
+    c.style.animationDuration =
+      (2.5+Math.random()*2)+"s";
+
+    c.style.animationDelay =
+      (Math.random()*.4)+"s";
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+      c.remove();
+    },5200);
   }
 }
 
