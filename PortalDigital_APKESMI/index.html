@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#145c3a">
+  <title>Portal Digital APKESMI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f7faf7;
+    }
+
+    /* APLIKASI */
+    #app {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+      opacity: 0;
+      transition: opacity .55s ease;
+    }
+
+    #app.show {
+      opacity: 1;
+    }
+
+    /* LOADER */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+
+      background:
+        radial-gradient(
+          circle at 8% 10%,
+          rgba(25, 110, 68, .09),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 92% 90%,
+          rgba(204, 35, 35, .06),
+          transparent 30%
+        ),
+        #f8faf8;
+
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .6s ease, visibility .6s ease;
+    }
+
+    #loader.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .content {
+      width: min(100%, 380px);
+      text-align: center;
+      color: #183d2b;
+      animation: appear .7s ease both;
+    }
+
+    /* LOGO APKESMI */
+    .logo-wrap {
+      width: 142px;
+      height: 142px;
+      margin: 0 auto 23px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 50%;
+      box-shadow:
+        0 8px 28px rgba(20, 80, 48, .10);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .logo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    /* AKSEN IDENTITAS */
+    .accent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 17px;
+    }
+
+    .accent span {
+      display: block;
+      height: 3px;
+      border-radius: 5px;
+    }
+
+    .accent .green {
+      width: 28px;
+      background: #17633d;
+    }
+
+    .accent .red {
+      width: 18px;
+      background: #d52027;
+    }
+
+    .accent .gold {
+      width: 10px;
+      background: #d5ae43;
+    }
+
+    .eyebrow {
+      margin-bottom: 9px;
+      color: #36734f;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: #174d31;
+      font-size: clamp(25px, 5vw, 31px);
+      font-weight: 750;
+      line-height: 1.2;
+      letter-spacing: -.7px;
+    }
+
+    .subtitle {
+      max-width: 310px;
+      margin: 0 auto;
+      color: #738176;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* PROGRESS */
+    .loading {
+      width: 220px;
+      max-width: 100%;
+      margin: 31px auto 0;
+    }
+
+    .track {
+      width: 100%;
+      height: 4px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #e1e9e2;
+    }
+
+    #bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        #17633d,
+        #38945c,
+        #d5ae43
+      );
+      transition: width .25s ease;
+    }
+
+    #status {
+      margin-top: 12px;
+      color: #879388;
+      font-size: 11px;
+      letter-spacing: .3px;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-wrap {
+        width: 126px;
+        height: 126px;
+        margin-bottom: 21px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADING SCREEN APKESMI -->
+  <div id="loader">
+    <div class="content">
+
+      <div class="logo-wrap">
+        <img
+          class="logo"
+          src="./logo-apkesmi.jpg"
+          alt="Logo APKESMI"
+        >
+      </div>
+
+      <div class="accent" aria-hidden="true">
+        <span class="green"></span>
+        <span class="red"></span>
+        <span class="gold"></span>
+      </div>
+
+      <div class="eyebrow">
+        Akselerasi Puskesmas Indonesia
+      </div>
+
+      <h1>Portal Digital APKESMI</h1>
+
+      <p class="subtitle">
+        Terintegrasi, Inovatif, dan Kolaboratif
+      </p>
+
+      <div class="loading">
+        <div class="track">
+          <div id="bar"></div>
+        </div>
+        <div id="status">Menyiapkan portal...</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- APLIKASI GOOGLE APPS SCRIPT -->
+  <iframe
+    id="app"
+    title="Portal Digital APKESMI"
+    src="https://script.google.com/macros/s/AKfycbz5sMj8kNu10O1tK2kxrGfUEErfqib6oYQ2i2aHPpK31Y6g3_-wA_AYykT-96HeDFbc/exec"
+    allow="camera; microphone; geolocation"
+    loading="eager">
+  </iframe>
+
+  <script>
+    const app = document.getElementById("app");
+    const loader = document.getElementById("loader");
+    const bar = document.getElementById("bar");
+    const status = document.getElementById("status");
+
+    let progress = 0;
+    let completed = false;
+
+    const timer = setInterval(() => {
+      if (completed) {
+        clearInterval(timer);
+        return;
+      }
+
+      progress = Math.min(
+        progress + Math.random() * 5,
+        90
+      );
+
+      bar.style.width = progress + "%";
+    }, 180);
+
+    function finishLoading() {
+      if (completed) return;
+
+      completed = true;
+      clearInterval(timer);
+
+      bar.style.width = "100%";
+      status.textContent = "Membuka portal...";
+
+      setTimeout(() => {
+        app.classList.add("show");
+        loader.classList.add("hide");
+      }, 450);
+    }
+
+    app.addEventListener("load", finishLoading);
+
+    // Pengaman jika iframe membutuhkan waktu lama
+    setTimeout(() => {
+      if (!completed) {
+        finishLoading();
+      }
+    }, 10000);
+  </script>
+
+</body>
+</html>
