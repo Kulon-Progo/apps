@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7faf7">
+<title>Persediaan Gizi</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7faf7;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity .55s ease;
+}
+
+#app.show {
+  opacity: 1;
+}
+
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 42%,
+      #ffffff 0%, #f8fbf8 48%, #eef5ef 100%);
+  transition: opacity .6s ease, visibility .6s ease;
+}
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content {
+  width: min(100%, 350px);
+  text-align: center;
+  color: #183e2b;
+  animation: enter .7s ease both;
+}
+
+/* ANIMASI IKON */
+.visual {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 30px;
+  display: grid;
+  place-items: center;
+}
+
+.orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #dceade;
+  border-radius: 32px;
+  transform: rotate(0deg);
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.orbit::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d7ae50;
+  box-shadow: 0 0 0 5px #f5f0df;
+}
+
+.icon-box {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 25px;
+  color: white;
+  background: linear-gradient(145deg, #287c4b, #17603a);
+  box-shadow: 0 12px 28px rgba(29, 104, 60, .18);
+  animation: float 3s ease-in-out infinite;
+}
+
+.icon-box svg {
+  width: 43px;
+  height: 43px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.leaf {
+  position: absolute;
+  right: -5px;
+  bottom: 9px;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #f8fbf8;
+  border-radius: 50%;
+  color: #267b49;
+  background: #e3f3e6;
+  animation: leafPulse 2.5s ease-in-out infinite;
+}
+
+.leaf svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: #568064;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: clamp(27px, 5vw, 32px);
+  font-weight: 750;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: #7a897d;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* PROGRESS BAR */
+.loading {
+  width: 210px;
+  margin: 32px auto 0;
+}
+
+.track {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e2eae3;
+}
+
+#bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #267a49, #8cba76);
+  transition: width .25s ease;
+}
+
+#status {
+  margin-top: 12px;
+  color: #8a978c;
+  font-size: 11px;
+  letter-spacing: .3px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .8;
+  }
+  50% {
+    transform: scale(1.055);
+    opacity: 1;
+  }
+}
+
+@keyframes leafPulse {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.07); }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .visual {
+    transform: scale(.94);
+    margin-bottom: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <main class="content">
+
+    <div class="visual">
+      <div class="orbit"></div>
+
+      <div class="icon-box">
+        <!-- Ikon kotak persediaan -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3.5 7.5 12 12l8.5-4.5"/>
+          <path d="M12 12v9"/>
+          <path d="m4 7.5 8-4 8 4v9l-8 4-8-4z"/>
+          <path d="M8 5.5l8 4.2"/>
+        </svg>
+      </div>
+
+      <div class="leaf">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 4c-9 0-15 4-15 10a5 5 0 0 0 5 5c6 0 10-6 10-15Z"/>
+          <path d="M5 19c3-5 7-8 12-11"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="eyebrow">Manajemen Logistik Gizi</div>
+
+    <h1>Persediaan Gizi</h1>
+
+    <p class="subtitle">
+      Kelola persediaan, dukung pelayanan gizi.
+    </p>
+
+    <div class="loading">
+      <div class="track">
+        <div id="bar"></div>
+      </div>
+      <div id="status">Menyiapkan aplikasi...</div>
+    </div>
+
+  </main>
+</div>
+
+<iframe
+  id="app"
+  title="Aplikasi Persediaan Gizi"
+  src="https://script.google.com/macros/s/AKfycbxckYy9mvMiVtHKMPL0y0NQQYAkRV-D6NsFEQ4opc967bjcweMipDPBsdtDHKWKWYjK/exec"
+  allow="camera; microphone; geolocation"
+  loading="eager">
+</iframe>
+
+<script>
+const app = document.getElementById("app");
+const loader = document.getElementById("loader");
+const bar = document.getElementById("bar");
+const status = document.getElementById("status");
+
+let progress = 0;
+let completed = false;
+
+const timer = setInterval(() => {
+  if (completed) {
+    clearInterval(timer);
+    return;
+  }
+
+  progress = Math.min(progress + Math.random() * 5, 90);
+  bar.style.width = progress + "%";
+}, 180);
+
+function finishLoading() {
+  if (completed) return;
+
+  completed = true;
+  clearInterval(timer);
+
+  bar.style.width = "100%";
+  status.textContent = "Membuka aplikasi...";
+
+  setTimeout(() => {
+    app.classList.add("show");
+    loader.classList.add("hide");
+  }, 400);
+}
+
+app.addEventListener("load", finishLoading);
+
+// Pengaman jika iframe lambat
+setTimeout(() => {
+  if (!completed) finishLoading();
+}, 10000);
+</script>
+
+</body>
+</html>
