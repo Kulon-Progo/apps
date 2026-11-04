@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f8fc">
+<title>Verifikasi Pembayaran HKN 2026</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f5f8fc;
+}
+
+/* APLIKASI */
+#app {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+  opacity: 0;
+  transition: opacity .55s ease;
+}
+
+#app.show {
+  opacity: 1;
+}
+
+/* LOADER */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 12% 12%,
+      rgba(48, 105, 211, .10), transparent 35%),
+    radial-gradient(circle at 88% 88%,
+      rgba(30, 140, 90, .08), transparent 32%),
+    #f7f9fd;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content {
+  width: min(100%, 390px);
+  text-align: center;
+  color: #183153;
+  animation: appear .7s ease both;
+}
+
+/* IKON PEMBAYARAN */
+.visual {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 28px;
+  display: grid;
+  place-items: center;
+}
+
+.orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #dce5f1;
+  border-radius: 32px;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.orbit::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d5ae43;
+  box-shadow: 0 0 0 5px #f5efdf;
+}
+
+.symbol {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  color: white;
+  background: linear-gradient(145deg, #3975d8, #2054a7);
+  box-shadow: 0 12px 28px rgba(43, 87, 174, .20);
+  animation: float 3s ease-in-out infinite;
+}
+
+.symbol svg {
+  width: 42px;
+  height: 42px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* CHECK BADGE */
+.check {
+  position: absolute;
+  right: -5px;
+  bottom: 8px;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #f7f9fd;
+  border-radius: 50%;
+  color: #20804e;
+  background: #e5f4e9;
+  animation: checkPulse 2.5s ease-in-out infinite;
+}
+
+.check svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: #4772c0;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-bottom: 12px;
+  font-size: clamp(25px, 5vw, 31px);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -.7px;
+}
+
+.theme {
+  color: #26734a;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: #7a879d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* PROGRESS */
+.loading {
+  width: 220px;
+  max-width: 100%;
+  margin: 30px auto 0;
+}
+
+.track {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e0e7f2;
+}
+
+#bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3975d8, #27814e, #d5ae43);
+  transition: width .25s ease;
+}
+
+#status {
+  margin-top: 12px;
+  color: #8490a5;
+  font-size: 11px;
+  letter-spacing: .3px;
+}
+
+/* ANIMASI */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: .75; }
+  50% { transform: scale(1.055); opacity: 1; }
+}
+
+@keyframes checkPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <main class="content">
+
+    <div class="visual">
+      <div class="orbit"></div>
+
+      <div class="symbol">
+        <!-- Ikon dokumen pembayaran -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="4" y="3" width="16" height="18" rx="2.5"/>
+          <path d="M8 8h8"/>
+          <path d="M8 12h5"/>
+          <path d="M8 16h3"/>
+          <path d="M15 15.5l1.5 1.5 3-3"/>
+        </svg>
+      </div>
+
+      <div class="check">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m5 12 4 4L19 6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="eyebrow">Seminar Nasional HKN · 2026</div>
+
+    <h1>Verifikasi Pembayaran</h1>
+
+    <div class="theme">Pembayaran Kolektif</div>
+
+    <p class="subtitle">
+      Seminar Nasional HKN Kulon Progo 2026
+    </p>
+
+    <div class="loading">
+      <div class="track">
+        <div id="bar"></div>
+      </div>
+      <div id="status">Menyiapkan aplikasi...</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- GOOGLE APPS SCRIPT -->
+<iframe
+  id="app"
+  title="Verifikasi Pembayaran Kolektif HKN 2026"
+  src="https://script.google.com/macros/s/AKfycbymjWfz-sOcqhAuOkOCiYq3u90XumfY8893chCIzwXbkfBq7kUhZ2lMREIXthbHbeqiFA/exec"
+  allow="camera; microphone; geolocation"
+  loading="eager">
+</iframe>
+
+<script>
+const app = document.getElementById("app");
+const loader = document.getElementById("loader");
+const bar = document.getElementById("bar");
+const status = document.getElementById("status");
+
+let progress = 0;
+let completed = false;
+
+const timer = setInterval(() => {
+  if (completed) {
+    clearInterval(timer);
+    return;
+  }
+
+  progress = Math.min(progress + Math.random() * 5, 90);
+  bar.style.width = progress + "%";
+}, 180);
+
+function finishLoading() {
+  if (completed) return;
+
+  completed = true;
+  clearInterval(timer);
+
+  bar.style.width = "100%";
+  status.textContent = "Membuka aplikasi...";
+
+  setTimeout(() => {
+    app.classList.add("show");
+    loader.classList.add("hide");
+  }, 400);
+}
+
+app.addEventListener("load", finishLoading);
+
+// Pengaman jika iframe lambat
+setTimeout(() => {
+  if (!completed) finishLoading();
+}, 10000);
+</script>
+
+</body>
+</html>
