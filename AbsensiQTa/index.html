@@ -1,9 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#2e1065">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Absensi Q-Ta">
 <title>Absensi Q-Ta | Toko Hijab</title>
 
 <style>
@@ -217,6 +220,9 @@ animation:loading 1.5s infinite;
 100%{transform:translateX(330%)}
 }
 
+/* LINK CADANGAN */
+#direct{display:none;margin-top:16px;color:#f5d0fe;font-size:12px;font-weight:700;text-decoration:underline}
+
 /* MOBILE */
 @media(max-width:480px){
 .card{padding:27px 20px}
@@ -232,10 +238,13 @@ animation:loading 1.5s infinite;
 
 <body>
 
-<!-- WEB APP -->
+<!-- WEB APP
+     allow="geolocation; camera" WAJIB ada agar GPS & kamera selfie bisa dipakai di dalam iframe (sama seperti SIGAP) -->
 <iframe
 id="app"
-src="https://script.google.com/macros/s/AKfycbzqDn-GP4gzQmXThun2ZoaY0FAxDz8u7tb8EBTeLquRod2hUtmfyoqo0PbBmb4sRKVTpQ/exec">
+src="https://script.google.com/macros/s/AKfycbzqDn-GP4gzQmXThun2ZoaY0FAxDz8u7tb8EBTeLquRod2hUtmfyoqo0PbBmb4sRKVTpQ/exec"
+allow="geolocation *;camera *;microphone *"
+loading="eager">
 </iframe>
 
 <!-- LOADER -->
@@ -280,6 +289,8 @@ pelayanan terbaik setiap hari
 <div class="bar"></div>
 </div>
 
+<a id="direct" target="_top" rel="noopener">Lambat? Buka aplikasi langsung</a>
+
 </div>
 </div>
 
@@ -294,6 +305,16 @@ loader.classList.add("hide");
 app.onload=function(){
 setTimeout(hideLoader,500);
 };
+
+// sinyal "siap" dari aplikasi Absensi (Index.html) → splash ditutup tepat waktu
+window.addEventListener("message",function(e){
+if(e.data && e.data.app==="presensi" && e.data.ready) hideLoader();
+});
+
+// tautan cadangan bila koneksi lambat / iframe diblokir
+var direct=document.getElementById("direct");
+direct.href=app.src;
+setTimeout(function(){ direct.style.display="inline-block"; },5000);
 
 setTimeout(hideLoader,10000);
 </script>
